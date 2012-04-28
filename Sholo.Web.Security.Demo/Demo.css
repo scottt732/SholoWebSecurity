@@ -1,0 +1,129 @@
+﻿html
+{
+    background-color: #404040;
+}
+
+body
+{
+    font-family: Verdana;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1010px;
+    position: relative;
+    background-color: White;
+	
+	-moz-box-shadow: 0px 2px 8px #333;
+	-webkit-box-shadow: 0px 2px 8px #333;
+	box-shadow: 0px 2px 8px #333;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=120, Color='#303030')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=120, Color='#303030');
+}
+
+form 
+{
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+}
+
+div.header 
+{
+    width: 100%;
+}
+
+div.title 
+{
+    vertical-align: top;
+    padding: 10px 15px 10px 15px;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    background-color: #505050;
+}
+
+div.logout 
+{
+    color: White;
+    font-size: smaller;
+    padding: 3px 5px 3px 5px;
+    background-color: #a0a0a0;
+    text-align: right;    
+    font-weight: bold;
+}
+
+div.logout a 
+{
+	color: White;
+	text-decoration: none;
+}
+
+div.logout a:hover
+{
+	color: White;
+	text-decoration: underline;
+}
+
+
+div.headerBody 
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1010px;
+}
+
+a 
+{
+    color: #505050;
+}
+
+div.menu 
+{
+    background-color: #f0f0f0;
+    color: #505050;
+}
+
+div.left
+{
+    float: left;
+    width: 650px;
+    vertical-align: top;
+    background-color: White;
+    font-size: small;
+    padding: 20px 0px 20px 20px;
+}
+
+div.right 
+{
+    float: right;
+    width: 300px;
+    vertical-align: top;
+    padding: 20px 20px 20px 0px;
+}
+
+div.clear 
+{
+    clear: both;
+}
+
+table.block
+{
+    width: 100%;
+}
+
+table.block th 
+{    
+    background-color: #d0d0d0;
+    color: 303030;
+    padding: 3px;
+    line-height: 1.75em;
+}
+
+table.block td
+{    
+    background-color: #f0f0f0;
+    padding: 3px;
+    vertical-align: top;
+    line-height: 1.75em;
+}

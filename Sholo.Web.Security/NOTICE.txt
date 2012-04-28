@@ -1,0 +1,6 @@
+﻿Sholo Web Security Module
+Copyright 2010-2012, Scott Holodak.
+
+This software contains code derived from the JA-SIG 
+DotNetCasClient (http://www.jasig.org/),  a .NET 
+implementation of a CAS authentication client.

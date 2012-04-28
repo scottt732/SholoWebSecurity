@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="~" title="Public Page">
+        <siteMapNode
+            url="~/Users.aspx"
+            title="Users Only Page"
+            description="The page that only authenticated users can see"
+            roles="Users" />
+        <siteMapNode
+            url="~/Admins.aspx"
+            title="Administrators Only Page"
+            description="The page that only admins can see" 
+            roles="Administrators" />
+    </siteMapNode>
+</siteMap>

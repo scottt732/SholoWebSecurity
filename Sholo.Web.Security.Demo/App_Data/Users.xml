@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfXmlUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <XmlUser>
+    <UserKey>3f6e4e64-c90b-4898-b2fc-79da8ca6d979</UserKey>
+    <UserName>user</UserName>
+    <Password>4F53CBCEBF9B4EFF25DCF816D5F702D9B7FEF72D</Password>
+    <PasswordSalt>ISKC/Ui//p3GL6c3MmIgdw==</PasswordSalt>
+    <Email />
+    <PasswordQuestion />
+    <PasswordAnswer />
+    <CreationDate>2010-09-23T09:55:03.3205561-04:00</CreationDate>
+    <LastActivityDate>2010-09-23T10:35:25.9904754-04:00</LastActivityDate>
+    <LastLoginDate>2010-09-23T10:35:25.9904754-04:00</LastLoginDate>
+    <LastPasswordChangeDate>2010-09-23T09:55:03.3205561-04:00</LastPasswordChangeDate>
+    <LastLockoutDate>9999-12-31T23:59:59.9999999</LastLockoutDate>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+  </XmlUser>
+  <XmlUser>
+    <UserKey>da042842-aafd-4a54-ac7b-589fd6b02719</UserKey>
+    <UserName>admin</UserName>
+    <Password>8BC4B6DCE89ED7A856335D52F903504573C24EEF</Password>
+    <PasswordSalt>0k3Whj4XmvvzwXpEbSyHIQ==</PasswordSalt>
+    <Email />
+    <PasswordQuestion />
+    <PasswordAnswer />
+    <CreationDate>2010-09-23T10:33:02.7400822-04:00</CreationDate>
+    <LastActivityDate>2010-09-24T14:27:27.6595917-04:00</LastActivityDate>
+    <LastLoginDate>2010-09-24T14:27:27.6595917-04:00</LastLoginDate>
+    <LastPasswordChangeDate>2010-09-23T10:33:02.7400822-04:00</LastPasswordChangeDate>
+    <LastLockoutDate>9999-12-31T23:59:59.9999999</LastLockoutDate>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+  </XmlUser>
+  <XmlUser>
+    <UserKey>5c87fc5d-9dd7-4abc-adf0-645f20433313</UserKey>
+    <UserName>bob</UserName>
+    <Password>2A55AA520DE2EDBBCCF77AA182082FEDCFDCAD39</Password>
+    <PasswordSalt>og1cdMjrBuHcBuO8JWOXxg==</PasswordSalt>
+    <Email />
+    <PasswordQuestion />
+    <PasswordAnswer />
+    <CreationDate>2010-09-23T10:33:22.2799894-04:00</CreationDate>
+    <LastActivityDate>2010-09-23T10:33:22.2799894-04:00</LastActivityDate>
+    <LastLoginDate>0001-01-01T00:00:00</LastLoginDate>
+    <LastPasswordChangeDate>2010-09-23T10:33:22.2799894-04:00</LastPasswordChangeDate>
+    <LastLockoutDate>9999-12-31T23:59:59.9999999</LastLockoutDate>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+  </XmlUser>
+  <XmlUser>
+    <UserKey>465b25ac-bcd8-47a5-ace5-76327b800a87</UserKey>
+    <UserName>noroles</UserName>
+    <Password>ADD4C7187F6E266B39F276E2457017477A15679B</Password>
+    <PasswordSalt>ssa6ADsfgWblVD7TzKIwqg==</PasswordSalt>
+    <Email />
+    <PasswordQuestion />
+    <PasswordAnswer />
+    <CreationDate>2010-09-23T10:33:22.2809896-04:00</CreationDate>
+    <LastActivityDate>2010-09-23T10:33:22.2809896-04:00</LastActivityDate>
+    <LastLoginDate>0001-01-01T00:00:00</LastLoginDate>
+    <LastPasswordChangeDate>2010-09-23T10:33:22.2809896-04:00</LastPasswordChangeDate>
+    <LastLockoutDate>9999-12-31T23:59:59.9999999</LastLockoutDate>
+    <IsApproved>true</IsApproved>
+    <IsLockedOut>false</IsLockedOut>
+  </XmlUser>
+</ArrayOfXmlUser>
