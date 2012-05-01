@@ -24,6 +24,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Security;
 using Sholo.Web.Security.Configuration;
+using Sholo.Web.Security.Provider;
 using Sholo.Web.Security.State;
 
 namespace Sholo.Web.Security
@@ -57,6 +58,7 @@ namespace Sholo.Web.Security
 
         // System.Web/Authentication and System.Web/Authentication/Forms static classes
         internal static AuthenticationSection AuthenticationConfig;
+        internal static SecurityProfilerConfiguration SecurityProfilerConfig;
         internal static StatefulFormsAuthenticationConfiguration StatefulFormsAuthenticationConfig;
         
         private static SHA512Managed _hashAlgorithm;
@@ -100,41 +102,42 @@ namespace Sholo.Web.Security
                     {
                         FormsAuthentication.Initialize();
                         AuthenticationConfig = (AuthenticationSection)WebConfigurationManager.GetSection("system.web/authentication");
+                        SecurityProfilerConfig = SecurityProfilerConfiguration.GetConfig();
                         StatefulFormsAuthenticationConfig = StatefulFormsAuthenticationConfiguration.GetConfig();
 
                         _hashAlgorithm = new SHA512Managed();
 
                         if (AuthenticationConfig == null)
                         {
-                            throw new ConfigurationErrorsException("The EnhancedSecurity module requires Forms authentication to be enabled in web.config.");
+                            throw new ConfigurationErrorsException("The EnhancedSecurityModule requires Forms authentication to be enabled in web.config.");
                         }
 
                         if (AuthenticationConfig.Mode != AuthenticationMode.Forms)
                         {
-                            throw new ConfigurationErrorsException("The EnhancedSecurity module requires Forms authentication to be enabled in web.config.");
+                            throw new ConfigurationErrorsException("The EnhancedSecurityModule requires Forms authentication to be enabled in web.config.");
                         }
 
                         if (FormsAuthentication.CookieMode != HttpCookieMode.UseCookies)
                         {
-                            throw new ConfigurationErrorsException("The EnhancedSecurity module requires Forms Authentication to use cookies (cookieless='UseCookies').");
+                            throw new ConfigurationErrorsException("The EnhancedSecurityModule requires Forms Authentication to use cookies (cookieless='UseCookies').");
                         }
 
                         /* TODO: Implement pluggable UserAuthenticationTicketStore */
-                        _ticketStoreProvider = "CacheUserAuthenticationTicketStore";
-                        _userAuthenticationTicketStore = new CacheUserAuthenticationTicketStore();
+                        _ticketStoreProvider = "CacheUserAuthenticationTicketProvider";
+                        _userAuthenticationTicketStore = new CacheUserAuthenticationTicketProvider();
 
                         /* TODO: Implement/fix sliding UserAuthenticationTicketStore expiration */
                         _formsTimeout = AuthenticationConfig.Forms.Timeout;
 
                         _enforceClientHostAddressValidation = StatefulFormsAuthenticationConfig.EnforceClientHostAddressValidation;
-                        _maintainServerTicketStore = StatefulFormsAuthenticationConfig.MaintainServerTicketStore;
-                        
-                        _minimumDelayOnSuspiciousRequest = StatefulFormsAuthenticationConfig.MinimumDelayOnSuspiciousRequest;
-                        _maximumDelayOnSuspiciousRequest = StatefulFormsAuthenticationConfig.MaximumDelayOnSuspiciousRequest;
-                        _minimumDelayOnMaliciousRequest = StatefulFormsAuthenticationConfig.MinimumDelayOnMaliciousRequest;
-                        _maximumDelayOnMaliciousRequest = StatefulFormsAuthenticationConfig.MaximumDelayOnMaliciousRequest;
-                        _minimumDelayOnCryptographicException = StatefulFormsAuthenticationConfig.MinimumDelayOnCryptographicException;
-                        _maximumDelayOnCryptographicException = StatefulFormsAuthenticationConfig.MaximumDelayOnCryptographicException;
+                        // _maintainServerTicketStore = StatefulFormsAuthenticationConfig.StateProvider
+
+                        _minimumDelayOnSuspiciousRequest = SecurityProfilerConfig.MinimumDelayOnSuspiciousRequest;
+                        _maximumDelayOnSuspiciousRequest = SecurityProfilerConfig.MaximumDelayOnSuspiciousRequest;
+                        _minimumDelayOnMaliciousRequest = SecurityProfilerConfig.MinimumDelayOnMaliciousRequest;
+                        _maximumDelayOnMaliciousRequest = SecurityProfilerConfig.MaximumDelayOnMaliciousRequest;
+                        _minimumDelayOnCryptographicException = SecurityProfilerConfig.MinimumDelayOnCryptographicException;
+                        _maximumDelayOnCryptographicException = SecurityProfilerConfig.MaximumDelayOnCryptographicException;
                         
                         _hashSalt = StatefulFormsAuthenticationConfig.HashSalt;
 
@@ -459,7 +462,7 @@ namespace Sholo.Web.Security
         /// The ticket store containing a record of tickets issued by the 
         /// server. 
         /// <remarks>
-        /// Currently supported values: CacheUserAuthenticationTicketStore
+        /// Currently supported values: CacheUserAuthenticationTicketProvider
         /// </remarks>
         /// </summary>
         public static string TicketStoreProvider

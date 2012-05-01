@@ -65,7 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\DeviceAuthenticationConfiguration.cs" />
+    <Compile Include="Configuration\DeviceAuthenticationTicketProviderCollection.cs" />
+    <Compile Include="Configuration\SecurityProfilerConfiguration.cs" />
     <Compile Include="Configuration\StatefulFormsAuthenticationConfiguration.cs" />
+    <Compile Include="Configuration\UserAuthenticationTicketProviderCollection.cs" />
     <Compile Include="DeviceAuthentication.cs" />
     <Compile Include="DeviceAuthenticationModule.cs" />
     <Compile Include="FormsAuthenticationAnalyzer.cs" />
@@ -73,13 +76,17 @@
     <Compile Include="EnhancedSecurity.cs" />
     <Compile Include="EnhancedSecurityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\CacheDeviceAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\DeviceAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\UserAuthenticationTicketProvider.cs" />
+    <Compile Include="SecurityProfiler.cs" />
+    <Compile Include="SecurityProfilerModule.cs" />
     <Compile Include="Ticket\BaseAuthenticationTicket.cs" />
     <Compile Include="Ticket\DeviceAuthenticationTicket.cs" />
     <Compile Include="Ticket\IAuthenticationTicket.cs" />
     <Compile Include="Ticket\UserAuthenticationTicket.cs" />
-    <Compile Include="State\CacheUserAuthenticationTicketStore.cs" />
-    <Compile Include="State\DeviceTicketStore.cs" />
-    <Compile Include="State\IDeviceTicketStore.cs" />
+    <Compile Include="Provider\CacheUserAuthenticationTicketProvider.cs" />
+    <Compile Include="State\IDeviceAuthenticationTicketStore.cs" />
     <Compile Include="State\ITicketStore.cs" />
     <Compile Include="State\IUserAuthenticationTicketStore.cs" />
   </ItemGroup>

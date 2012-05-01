@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+using System;
+using System.Configuration;
+using System.Web.Configuration;
+using Sholo.Web.Security.Configuration;
+using Sholo.Web.Security.Provider;
+
 namespace Sholo.Web.Security
 {
     /// <summary>
@@ -21,5 +27,62 @@ namespace Sholo.Web.Security
     /// </summary>
     public sealed class DeviceAuthentication
     {
+        // Thread-safe initialization
+        private static readonly object LockObject;
+        private static bool _initialized;
+
+        private static DeviceAuthenticationTicketProvider defaultProvider;
+        private static DeviceAuthenticationTicketProviderCollection providers;
+
+        static DeviceAuthentication()
+        {
+            LockObject = new object();
+        }
+
+        private static void Initialize()
+        {
+            if (!_initialized)
+            {
+                lock (LockObject)
+                {
+                    if (!_initialized)
+                    {
+                        DeviceAuthenticationConfiguration configuration = (DeviceAuthenticationConfiguration) ConfigurationManager.GetSection("DeviceAuthentication");
+
+                        if (configuration == null)
+                            throw new ConfigurationErrorsException("DeviceAuthentication configuration section is not configured correctly.");
+
+                        providers = new DeviceAuthenticationTicketProviderCollection();
+
+                        ProvidersHelper.InstantiateProviders(configuration.Providers, providers, typeof (DeviceAuthenticationTicketProviderCollection));
+
+                        providers.SetReadOnly();
+
+                        defaultProvider = providers[configuration.StateProvider];
+
+                        if (defaultProvider == null)
+                            throw new Exception("defaultProvider");
+                    }
+                }
+            }
+        }
+
+        public static DeviceAuthenticationTicketProvider Provider
+        {
+            get
+            {
+                Initialize();
+                return defaultProvider;
+            }
+        }
+
+        public static DeviceAuthenticationTicketProviderCollection Providers
+        {
+            get
+            {
+                Initialize();
+                return providers;
+            }
+        }
     }
 }

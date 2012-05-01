@@ -23,5 +23,25 @@ namespace Sholo.Web.Security.Configuration
     /// </summary>
     public class DeviceAuthenticationConfiguration : ConfigurationSection
     {
+        private const string ConfigurationSectionName = "deviceAuthentication";
+
+        public static DeviceAuthenticationConfiguration GetConfig()
+        {
+            return (DeviceAuthenticationConfiguration)ConfigurationManager.GetSection(ConfigurationSectionName)
+                ?? new DeviceAuthenticationConfiguration();
+        }
+
+        [ConfigurationProperty("providers")]
+        public ProviderSettingsCollection Providers
+        {
+            get { return (ProviderSettingsCollection) base["providers"]; }
+        }
+
+        [ConfigurationProperty("stateProvider", DefaultValue="CacheDeviceAuthenticationTicketProvider")]
+        public string StateProvider
+        {
+            get { return (string) base["stateProvider"]; }
+            set { base["stateProvider"] = value; }
+        }
     }
 }
