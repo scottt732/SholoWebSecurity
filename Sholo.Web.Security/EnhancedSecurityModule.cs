@@ -19,6 +19,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
+using Sholo.Web.Security.Analysis;
 using Sholo.Web.Security.Ticket;
 
 namespace Sholo.Web.Security
@@ -48,21 +49,6 @@ namespace Sholo.Web.Security
         {
         }
 
-        private static string RemovQueryStringArg(string queryStringArg)
-        {
-            HttpContext context = HttpContext.Current;
-            HttpRequest request = context.Request;
-
-            string argValue = request.QueryString[queryStringArg];
-            if (argValue != null)
-            {
-                string newUrl = Regex.Replace(request.RawUrl, Regex.Escape(queryStringArg + "=" + argValue), string.Empty, RegexOptions.IgnoreCase).Replace("?&", "?").Replace("&&", "&");
-                return newUrl.EndsWith("?") ? newUrl.Substring(0, newUrl.Length - 1) : newUrl;
-            }
-            return request.RawUrl;
-        }
-
-
         /// <summary>
         /// Intercepts the beginning of the request pipeline and performs analysis
         /// and manipulation of FormsAuthenticationCookies prior to the 
@@ -90,18 +76,8 @@ namespace Sholo.Web.Security
                 response.Redirect(newUrl, false);
                 response.End();
             }
-
-            /* TODO: Remove this once working */
-            /*
-            if (request.RawUrl.Contains("WebResource.axd"))
-            {
-                return;
-            }
-            */
               
             EnhancedSecurity.Initialize();                        
-            EnhancedSecurity.UserAuthenticationTicketStore.RemoveExpiredTickets();            
-            EnhancedSecurity.Initialize();
 
             HttpCookie formsAuthCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
             FormsAuthenticationAnalyzer analyzer = new FormsAuthenticationAnalyzer(formsAuthCookie, false);
@@ -123,7 +99,7 @@ namespace Sholo.Web.Security
                 {
                     EnhancedSecurity.SetFormsAuthStatus(FormsAuthenticationStatus.Valid);
 
-                    if (EnhancedSecurity.MaintainServerTicketStore)
+                    if (UserAuthentication.Enabled)
                     {
                         // analyzer.FormsAuthenticationCookie.Value;
                         context.Items["OriginalCookieValue"] = analyzer.FormsAuthenticationCookie.Value;
@@ -132,7 +108,7 @@ namespace Sholo.Web.Security
                         context.Items["UserAuthenticationTicket"] = analyzer.UserAuthenticationTicket;
 
                         // Substitute actual UserData from serverTicket
-                        FormsAuthenticationTicket tempFormsAuthTicket = EnhancedSecurity.CreateFormsAuthTicket(
+                        FormsAuthenticationTicket tempFormsAuthTicket = UserAuthentication.CreateFormsAuthTicket(
                             analyzer.UserAuthenticationTicket.Username,
                             analyzer.UserAuthenticationTicket.CookiePath,
                             analyzer.UserAuthenticationTicket.TicketUserData, 
@@ -141,7 +117,7 @@ namespace Sholo.Web.Security
                             false
                         );
 
-                        EnhancedSecurity.SetAuthCookie(tempFormsAuthTicket, true, false);
+                        UserAuthentication.SetAuthCookie(tempFormsAuthTicket, true, false);
                     }
                 }
             }
@@ -194,21 +170,21 @@ namespace Sholo.Web.Security
 
                 if (preAnalyzer != null)
                 {
-                    FormsAuthenticationAnalyzer.ComparisonResult result = FormsAuthenticationAnalyzer.Compare(preAnalyzer, postAnalyzer);
+                    ComparisonResult result = FormsAuthenticationAnalyzer.Compare(preAnalyzer, postAnalyzer);
 
-                    if (result == FormsAuthenticationAnalyzer.ComparisonResult.UnauthenticatedRequest)
+                    if (result == ComparisonResult.UnauthenticatedRequest)
                     {
                         // Nothing to do   
                     }
-                    else if (result == FormsAuthenticationAnalyzer.ComparisonResult.AuthenticatedRequest)
+                    else if (result == ComparisonResult.AuthenticatedRequest)
                     {
                         // Nothing to do   
                     }
-                    else if (result == FormsAuthenticationAnalyzer.ComparisonResult.LoginRequest)
+                    else if (result == ComparisonResult.LoginRequest)
                     {
                         // Store the ticket on the server
 
-                        string hash = EnhancedSecurity.CalculateFormsAuthTicketHash(postAnalyzer.FormsAuthenticationTicket);
+                        string hash = UserAuthentication.CalculateFormsAuthTicketHash(postAnalyzer.FormsAuthenticationTicket);
                         string key = Guid.NewGuid().ToString();
 
                         UserAuthenticationTicket serverAuthTicket = new UserAuthenticationTicket
@@ -228,9 +204,9 @@ namespace Sholo.Web.Security
                             TicketHash = hash
                         };
 
-                        EnhancedSecurity.UserAuthenticationTicketStore.InsertTicket(serverAuthTicket, postAnalyzer.FormsAuthenticationTicket.Expiration);
+                        UserAuthentication.UserAuthenticationTicketStore.InsertTicket(serverAuthTicket, postAnalyzer.FormsAuthenticationTicket.Expiration);
 
-                        FormsAuthenticationTicket newFormsAuthTicket = EnhancedSecurity.CreateFormsAuthTicket(
+                        FormsAuthenticationTicket newFormsAuthTicket = UserAuthentication.CreateFormsAuthTicket(
                             postAnalyzer.FormsAuthenticationTicket.Name,
                             postAnalyzer.FormsAuthenticationCookie.Path,
                             hash + ";" + key,
@@ -239,22 +215,22 @@ namespace Sholo.Web.Security
                             false
                         );
 
-                        EnhancedSecurity.ClearAuthCookie();
-                        EnhancedSecurity.SetAuthCookie(newFormsAuthTicket, true, true);
+                        UserAuthentication.ClearAuthCookie();
+                        UserAuthentication.SetAuthCookie(newFormsAuthTicket, true, true);
                     }
-                    else if (result == FormsAuthenticationAnalyzer.ComparisonResult.LogoutRequest)
+                    else if (result == ComparisonResult.LogoutRequest)
                     {
                         if (preAnalyzer.UserAuthenticationTicket != null)
                         {
-                            EnhancedSecurity.UserAuthenticationTicketStore.RevokeTicket(preAnalyzer.UserAuthenticationTicket.Key);
+                            UserAuthentication.UserAuthenticationTicketStore.RevokeTicket(preAnalyzer.UserAuthenticationTicket.Key);
                         }
-                        EnhancedSecurity.ClearAuthCookie();
+                        UserAuthentication.ClearAuthCookie();
 
                         // Revoke the ticket on the server
                     }
-                    else if (result == FormsAuthenticationAnalyzer.ComparisonResult.MaliciousRequest)
+                    else if (result == ComparisonResult.MaliciousRequest)
                     {
-                        EnhancedSecurity.ClearAuthCookie();
+                        UserAuthentication.ClearAuthCookie();
 
                         // Hmm.. what to do
                         // System.Diagnostics.Debugger.Break();
@@ -264,7 +240,7 @@ namespace Sholo.Web.Security
             else if (status == FormsAuthenticationStatus.Valid)
             {
                 // TODO: Handle sliding ticket expiration
-                // EnhancedSecurity.UserAuthenticationTicketStore.UpdateTicketExpiration();
+                // UserAuthentication.UserAuthenticationTicketStore.UpdateTicketExpiration();
             }
         }
 
@@ -307,5 +283,21 @@ namespace Sholo.Web.Security
                 }
             }
         }
+
+        #region Helper Methods
+        private static string RemovQueryStringArg(string queryStringArg)
+        {
+            HttpContext context = HttpContext.Current;
+            HttpRequest request = context.Request;
+
+            string argValue = request.QueryString[queryStringArg];
+            if (argValue != null)
+            {
+                string newUrl = Regex.Replace(request.RawUrl, Regex.Escape(queryStringArg + "=" + argValue), string.Empty, RegexOptions.IgnoreCase).Replace("?&", "?").Replace("&&", "&");
+                return newUrl.EndsWith("?") ? newUrl.Substring(0, newUrl.Length - 1) : newUrl;
+            }
+            return request.RawUrl;
+        }
+        #endregion
     }
 }

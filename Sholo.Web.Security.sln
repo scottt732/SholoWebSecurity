@@ -1,33 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 11
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sholo.Web.Security", "Sholo.Web.Security\Sholo.Web.Security.csproj", "{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "localhost", "http://localhost:59519", "{1700F2D3-B28C-4D77-8C4F-CA9606A6EA69}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Sholo.Web.Security.Demo", "Sholo.Web.Security.Demo\", "{815DC7CD-26E7-423D-9FD1-9AFA2B264021}"
 	ProjectSection(WebsiteProperties) = preProject
-		SccProjectName = ""
-		SccAuxPath = ""
-		SccLocalPath = ""
-		SccProvider = ""
-		UseIISExpress = "true"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
-		ProjectReferences = "{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}|StatefulFormsAuthentication.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
+		Debug.AspNetCompiler.Debug = "True"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.PhysicalPath = "Sholo.Web.Security.Demo\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Sholo.Web.Security.Demo\"
 		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
+		Debug.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
+		ProjectReferences = "{883a296e-c898-4d1f-9ed9-de7569defb3d}|Sholo.Web.Security.dll;"
+		Release.AspNetCompiler.Debug = "False"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.PhysicalPath = "Sholo.Web.Security.Demo\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Sholo.Web.Security.Demo\"
 		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "Sholo.Web.Security.Demo\"
-		DefaultWebSiteLanguage = "Visual C#"
+		Release.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		VWDPort = "53596"
 	EndProjectSection
 EndProject
 Global
@@ -36,14 +30,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1700F2D3-B28C-4D77-8C4F-CA9606A6EA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1700F2D3-B28C-4D77-8C4F-CA9606A6EA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1700F2D3-B28C-4D77-8C4F-CA9606A6EA69}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{1700F2D3-B28C-4D77-8C4F-CA9606A6EA69}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

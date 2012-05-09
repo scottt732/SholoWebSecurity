@@ -35,6 +35,21 @@ namespace Sholo.Web.Security.Configuration
                 ?? new UserAuthenticationConfiguration();
         }
 
+        [ConfigurationProperty("enabled", DefaultValue = "true", IsRequired = true)]
+        public bool Enabled
+        {
+            get
+            {
+                bool result = true;
+                if (this["enabled"] != null)
+                {
+                    bool.TryParse(this["enabled"].ToString(), out result);
+                }
+                return result;
+            }
+        }
+
+
         [ConfigurationProperty("enforceClientHostAddressValidation", DefaultValue = "true", IsRequired = false)]
         public bool EnforceClientHostAddressValidation
         {
@@ -58,20 +73,6 @@ namespace Sholo.Web.Security.Configuration
                 if (this["enforceUserAgentValidation"] != null)
                 {
                     bool.TryParse(this["enforceUserAgentValidation"].ToString(), out result);
-                }
-                return result;
-            }
-        }
-
-        [ConfigurationProperty("enforceDeviceFingerprintValidation", DefaultValue = "false", IsRequired = false)]
-        public bool EnforceDeviceFingerprintValidation
-        {
-            get
-            {
-                bool result = true;
-                if (this["enforceDeviceFingerprintValidation"] != null)
-                {
-                    bool.TryParse(this["enforceDeviceFingerprintValidation"].ToString(), out result);
                 }
                 return result;
             }

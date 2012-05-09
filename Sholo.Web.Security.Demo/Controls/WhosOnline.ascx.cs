@@ -24,7 +24,7 @@ public partial class Controls_WhosOnline : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        WhosOnlineList.DataSource = EnhancedSecurity.UserAuthenticationTicketStore.GetAllTicketedUsers();
+        WhosOnlineList.DataSource = UserAuthentication.UserAuthenticationTicketStore.GetAllTicketedUsers();
         WhosOnlineList.DataBind();
     }
 }

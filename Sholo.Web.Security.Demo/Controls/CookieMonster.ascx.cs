@@ -23,6 +23,7 @@ using System.Text;
 using System.Web;
 using System.Web.Security;
 using Sholo.Web.Security;
+using Sholo.Web.Security.Analysis;
 using Sholo.Web.Security.Ticket;
 
 public partial class User_controls_CookieMonster : System.Web.UI.UserControl
@@ -104,9 +105,9 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
     }
 
     private void ValidateFields()
-    {
-        RequestHostAddressValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.HostAddressMatch);
-        RequestUserNameValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketUsernameMatch);
+    {        
+        RequestHostAddressValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.HostAddressMatch);
+        RequestUserNameValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketUsernameMatch);
 
         CookieDomainValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationCookieResult.IsDomainValid);
         CookieNameValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationCookieResult.IsCookieFormsAuthCookie);
@@ -120,36 +121,36 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
         TicketUserDataServerValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationTicketResult.UserDataContainsHash && preAnalyzer.FormsAuthenticationTicketResult.IsUserDataHashValid && preAnalyzer.FormsAuthenticationTicketResult.UserDataContainsServerAuthenticationTicketKey);
         TicketVersionValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationTicketResult.IsVersionValid);
 
-        ServerHostAddressValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.HostAddressMatch);
-        ServerUsernameValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketUsernameMatch);
-        ServerCookieDomainValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.CookieDomainMatch);
-        ServerCookieNameValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.CookieNameMatch);
-        ServerCookiePathValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.CookiePathMatch);
-        ServerCookieSecureValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.CookieSecureMatch);
-        ServerTicketIsPersistentValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketPersistenceMatch);
-        ServerTicketIssueDateValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketIssueDateMatch);
-        ServerKeyValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketExists);
-        ServerTicketHashValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketHashMatch);
-        ServerTicketVersionValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.TicketVersionMatch);
+        ServerHostAddressValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.HostAddressMatch);
+        ServerUsernameValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketUsernameMatch);
+        ServerCookieDomainValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.CookieDomainMatch);
+        ServerCookieNameValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.CookieNameMatch);
+        ServerCookiePathValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.CookiePathMatch);
+        ServerCookieSecureValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.CookieSecureMatch);
+        ServerTicketIsPersistentValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketPersistenceMatch);
+        ServerTicketIssueDateValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketIssueDateMatch);
+        ServerKeyValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketExists);
+        ServerTicketHashValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketHashMatch);
+        ServerTicketVersionValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.TicketVersionMatch);
 
         StatusColor.BackColor = GetColor(
-            preAnalyzer.FormsAuthenticationCookieResult.IsValid && preAnalyzer.FormsAuthenticationTicketResult.IsValid && preAnalyzer.ServerAuthenticationTicketResult.IsValid,
-            preAnalyzer.FormsAuthenticationCookieResult.IsMalicious || preAnalyzer.FormsAuthenticationTicketResult.IsMalicious || preAnalyzer.ServerAuthenticationTicketResult.IsMalicious
+            preAnalyzer.FormsAuthenticationCookieResult.IsValid && preAnalyzer.FormsAuthenticationTicketResult.IsValid && preAnalyzer.UserAuthenticationTicketResult.IsValid,
+            preAnalyzer.FormsAuthenticationCookieResult.IsMalicious || preAnalyzer.FormsAuthenticationTicketResult.IsMalicious || preAnalyzer.UserAuthenticationTicketResult.IsMalicious
         );
 
         CurrentRequestValid.BackColor = GetColor(
-            preAnalyzer.FormsAuthenticationCookieResult.IsValid && preAnalyzer.FormsAuthenticationTicketResult.IsValid && preAnalyzer.ServerAuthenticationTicketResult.IsValid,
-            preAnalyzer.FormsAuthenticationCookieResult.IsMalicious || preAnalyzer.FormsAuthenticationTicketResult.IsMalicious || preAnalyzer.ServerAuthenticationTicketResult.IsMalicious
+            preAnalyzer.FormsAuthenticationCookieResult.IsValid && preAnalyzer.FormsAuthenticationTicketResult.IsValid && preAnalyzer.UserAuthenticationTicketResult.IsValid,
+            preAnalyzer.FormsAuthenticationCookieResult.IsMalicious || preAnalyzer.FormsAuthenticationTicketResult.IsMalicious || preAnalyzer.UserAuthenticationTicketResult.IsMalicious
         );        
 
         FormsAuthenticationCookieValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationCookieResult.IsValid, preAnalyzer.FormsAuthenticationCookieResult.IsMalicious);
         FormsAuthenticationTicketValid.BackColor = GetColor(preAnalyzer.FormsAuthenticationTicketResult.IsValid, preAnalyzer.FormsAuthenticationTicketResult.IsMalicious);
-        ServerAuthenticationTicketValid.BackColor = GetColor(preAnalyzer.ServerAuthenticationTicketResult.IsValid, preAnalyzer.ServerAuthenticationTicketResult.IsMalicious);
+        ServerAuthenticationTicketValid.BackColor = GetColor(preAnalyzer.UserAuthenticationTicketResult.IsValid, preAnalyzer.UserAuthenticationTicketResult.IsMalicious);
 
         /*
         TicketExpirationValid.BackColor = 
             ServerTicketExpirationValid.BackColor = 
-            GetColor(preAnalyzer.ServerAuthenticationTicketResult. TODO: Fix this
+            GetColor(preAnalyzer.UserAuthenticationTicketResult. TODO: Fix this
         */
         
         /*                
@@ -173,7 +174,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
 
         if (TamperFormsAuthenticationTicket.Checked)
         {
-            newTicket = EnhancedSecurity.CreateFormsAuthTicket(
+            newTicket = UserAuthentication.CreateFormsAuthTicket(
                 TicketName.Text,
                 TicketCookiePath.Text,
                 TicketUserDataServer.Text,
@@ -187,7 +188,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
 
         if (TamperFormsAuthenticationCookie.Checked)
         {
-            EnhancedSecurity.ClearAuthCookie();
+            UserAuthentication.ClearAuthCookie();
 
             HttpCookie newCookie = new HttpCookie(FormsAuthentication.FormsCookieName);
             newCookie.Domain = CookieDomain.Text;
@@ -215,7 +216,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
         }
         else if (TamperFormsAuthenticationTicket.Checked)
         {
-            EnhancedSecurity.ClearAuthCookie();
+            UserAuthentication.ClearAuthCookie();
 
             HttpCookie newCookie = new HttpCookie(FormsAuthentication.FormsCookieName, formsAuthCookieValue);
             newCookie.Path = FormsAuthentication.FormsCookiePath;
@@ -239,7 +240,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
             string originalKey = Request["OriginalTicketKey"];
             string newKey = ServerKey.Text;
 
-            EnhancedSecurity.UserAuthenticationTicketStore.RevokeTicket(originalKey);
+            UserAuthentication.UserAuthenticationTicketStore.RevokeTicket(originalKey);
 
             UserAuthenticationTicket serverAuthenticationTicket = new UserAuthenticationTicket();
             serverAuthenticationTicket.Key = ServerKey.Text;
@@ -267,7 +268,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
                 serverAuthenticationTicket.TicketIssueDate = ticketIssueDate;
             }
 
-            EnhancedSecurity.UserAuthenticationTicketStore.InsertTicket(serverAuthenticationTicket, ticketExpiration);
+            UserAuthentication.UserAuthenticationTicketStore.InsertTicket(serverAuthenticationTicket, ticketExpiration);
         }
 
         Response.Redirect(Request.RawUrl, false);

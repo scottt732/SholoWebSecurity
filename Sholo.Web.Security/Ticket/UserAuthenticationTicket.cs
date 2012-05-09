@@ -36,5 +36,11 @@ namespace Sholo.Web.Security.Ticket
         /// FormsAuthenticationTicket
         /// </summary>
         public string HostAddress { get; set; }
+
+        /// <summary>
+        /// The UserAgent of the browser who initially received the
+        /// FormsAuthenticationTicket
+        /// </summary>
+        public string UserAgent { get; set; }
     }
 }

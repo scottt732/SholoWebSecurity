@@ -68,23 +68,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\ComparisonResult.cs" />
+    <Compile Include="Analysis\ContextInformation.cs" />
+    <Compile Include="Analysis\FormsAuthenticationCookieAnalysis.cs" />
+    <Compile Include="Analysis\FormsAuthenticationTicketAnalysis.cs" />
+    <Compile Include="Analysis\UserAuthenticationTicketAnalysis.cs" />
     <Compile Include="Configuration\DeviceAuthenticationConfiguration.cs" />
     <Compile Include="Configuration\DeviceAuthenticationTicketProviderCollection.cs" />
+    <Compile Include="Configuration\MultipleLoginsConfiguration.cs" />
+    <Compile Include="Configuration\PenaltiesConfiguration.cs" />
+    <Compile Include="Configuration\RequestProfilerConfiguration.cs" />
+    <Compile Include="Configuration\ResponseDelaysConfiguration.cs" />
     <Compile Include="Configuration\SecurityProfilerConfiguration.cs" />
-    <Compile Include="Configuration\StatefulFormsAuthenticationConfiguration.cs" />
+    <Compile Include="Configuration\UserAuthenticationConfiguration.cs" />
     <Compile Include="Configuration\UserAuthenticationTicketProviderCollection.cs" />
     <Compile Include="DeviceAuthentication.cs" />
     <Compile Include="DeviceAuthenticationModule.cs" />
-    <Compile Include="FormsAuthenticationAnalyzer.cs" />
-    <Compile Include="FormsAuthenticationStatus.cs" />
+    <Compile Include="Analysis\FormsAuthenticationAnalyzer.cs" />
+    <Compile Include="Analysis\FormsAuthenticationStatus.cs" />
     <Compile Include="EnhancedSecurity.cs" />
     <Compile Include="EnhancedSecurityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\CacheDeviceAuthenticationTicketProvider.cs" />
     <Compile Include="Provider\DeviceAuthenticationTicketProvider.cs" />
     <Compile Include="Provider\UserAuthenticationTicketProvider.cs" />
-    <Compile Include="SecurityProfiler.cs" />
-    <Compile Include="SecurityProfilerModule.cs" />
+    <Compile Include="RequestProfiler.cs" />
+    <Compile Include="RequestProfilerModule.cs" />
     <Compile Include="Ticket\BaseAuthenticationTicket.cs" />
     <Compile Include="Ticket\DeviceAuthenticationTicket.cs" />
     <Compile Include="Ticket\IAuthenticationTicket.cs" />
@@ -93,6 +102,8 @@
     <Compile Include="State\IDeviceAuthenticationTicketStore.cs" />
     <Compile Include="State\ITicketStore.cs" />
     <Compile Include="State\IUserAuthenticationTicketStore.cs" />
+    <Compile Include="UserAuthentication.cs" />
+    <Compile Include="UserAuthenticationModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
