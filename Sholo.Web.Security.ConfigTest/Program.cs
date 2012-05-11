@@ -15,7 +15,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Sholo.Web.Security.Authentication.User;
+using Sholo.Web.Security.Penalties;
 
 namespace Sholo.Web.Security.ConfigTest
 {
@@ -24,6 +26,9 @@ namespace Sholo.Web.Security.ConfigTest
         static void Main(string[] args)
         {
             Console.WriteLine(UserAuthentication.Enabled);
+            var list = new List<PenaltyRule>(PenaltyRuleProviderManager.Provider.GetRules());
+            Console.WriteLine(list.Count);
+            
             Console.ReadLine();
         }
     }
