@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,10 @@
 using System;
 using System.Configuration;
 using System.Web.Configuration;
+using Sholo.Web.Security.Authentication.Device.Provider;
 using Sholo.Web.Security.Configuration;
-using Sholo.Web.Security.Provider;
 
-namespace Sholo.Web.Security
+namespace Sholo.Web.Security.Authentication.Device
 {
     /// <summary>
     /// 

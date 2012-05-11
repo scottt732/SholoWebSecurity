@@ -18,7 +18,7 @@
  */
 
 using System;
-using Sholo.Web.Security;
+using Sholo.Web.Security.Authentication.User;
 
 public partial class Controls_WhosOnline : System.Web.UI.UserControl
 {

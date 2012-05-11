@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,11 @@
  */
 
 using System;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using Sholo.Web.Security.Analysis;
-using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security
+namespace Sholo.Web.Security.Authentication.User
 {
     public class UserAuthenticationModule : IHttpModule
     {

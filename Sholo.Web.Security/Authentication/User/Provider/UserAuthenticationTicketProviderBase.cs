@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,16 +17,11 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
-using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security.Authentication.User.Provider
 {
     public abstract class UserAuthenticationTicketProviderBase : ProviderBase, IUserAuthenticationTicketProvider
     {
-        public UserAuthenticationTicketProviderBase()
-        {
-        }
-
         public abstract void RemoveExpiredTickets();
         public abstract UserAuthenticationTicket GetTicket(string ticketKey);
         public abstract void InsertTicket(UserAuthenticationTicket ticket, DateTime expiration);

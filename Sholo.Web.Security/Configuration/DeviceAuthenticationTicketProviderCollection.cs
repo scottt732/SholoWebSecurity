@@ -15,7 +15,7 @@
  */
 
 using System.Configuration.Provider;
-using Sholo.Web.Security.Provider;
+using Sholo.Web.Security.Authentication.Device.Provider;
 
 namespace Sholo.Web.Security.Configuration
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Sholo.Web.Security.Authentication.User;
 
 namespace Sholo.Web.Security.ConfigTest
 {

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,9 +20,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Caching;
-using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security.Authentication.User.Provider
 {
     /// <summary>
     /// An IUserAuthenticationTicketProvider implementation that relies on the ASP.NET Caching model for ticket 

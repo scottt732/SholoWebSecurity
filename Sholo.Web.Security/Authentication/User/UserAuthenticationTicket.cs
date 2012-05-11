@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-using System;
+using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.Ticket
+namespace Sholo.Web.Security.Authentication.User
 {
     ///<summary>
     /// A data object containing information about 

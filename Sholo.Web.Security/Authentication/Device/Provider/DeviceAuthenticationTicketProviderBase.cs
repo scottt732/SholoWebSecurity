@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,8 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
-using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security.Authentication.Device.Provider
 {
     public abstract class DeviceAuthenticationTicketProviderBase : ProviderBase, IDeviceAuthenticationTicketProvider
     {
@@ -32,5 +31,7 @@ namespace Sholo.Web.Security.Provider
         public abstract IEnumerable<DeviceAuthenticationTicket> GetAllTickets();
         public abstract IEnumerable<string> GetAllTicketKeys();
         public abstract bool VerifyTicket(DeviceAuthenticationTicket ticket);
+        public abstract IEnumerable<string> GetDeviceUsers();
+        public abstract IEnumerable<string> GetDeviceTicketsByHostAddress(string hostAddress);
     }
 }

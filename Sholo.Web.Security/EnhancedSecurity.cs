@@ -15,10 +15,10 @@
  */
 
 using System;
-using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.Security;
+using Sholo.Web.Security.Authentication.User;
 using Sholo.Web.Security.Configuration;
 
 namespace Sholo.Web.Security

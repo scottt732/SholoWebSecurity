@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-using Sholo.Web.Security.Ticket;
+using System.Collections.Generic;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security.Authentication.Device.Provider
 {
     public interface IDeviceAuthenticationTicketProvider : IAuthenticationTicketProvider<string, DeviceAuthenticationTicket>
     {
+        IEnumerable<string> GetDeviceUsers();
+        IEnumerable<string> GetDeviceTicketsByHostAddress(string hostAddress);
     }
 }

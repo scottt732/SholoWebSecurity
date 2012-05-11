@@ -82,28 +82,28 @@
     <Compile Include="Configuration\SecurityProfilerConfiguration.cs" />
     <Compile Include="Configuration\UserAuthenticationConfiguration.cs" />
     <Compile Include="Configuration\UserAuthenticationTicketProviderCollection.cs" />
-    <Compile Include="DeviceAuthentication.cs" />
-    <Compile Include="DeviceAuthenticationModule.cs" />
     <Compile Include="Analysis\FormsAuthenticationAnalyzer.cs" />
     <Compile Include="Analysis\FormsAuthenticationStatus.cs" />
+    <Compile Include="Authentication\Device\DeviceAuthentication.cs" />
+    <Compile Include="Authentication\Device\DeviceAuthenticationModule.cs" />
+    <Compile Include="Authentication\Device\DeviceAuthenticationTicket.cs" />
+    <Compile Include="Authentication\Device\Provider\CacheDeviceAuthenticationTicketProvider.cs" />
+    <Compile Include="Authentication\Device\Provider\DeviceAuthenticationTicketProviderBase.cs" />
+    <Compile Include="Authentication\Device\Provider\IDeviceAuthenticationTicketProvider.cs" />
     <Compile Include="EnhancedSecurity.cs" />
     <Compile Include="EnhancedSecurityModule.cs" />
+    <Compile Include="IAuthenticationTicketProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provider\CacheDeviceAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\DeviceAuthenticationTicketProviderBase.cs" />
-    <Compile Include="Provider\IAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\IDeviceAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\IUserAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\UserAuthenticationTicketProviderBase.cs" />
     <Compile Include="RequestProfiler.cs" />
     <Compile Include="RequestProfilerModule.cs" />
     <Compile Include="Ticket\BaseAuthenticationTicket.cs" />
-    <Compile Include="Ticket\DeviceAuthenticationTicket.cs" />
     <Compile Include="Ticket\IAuthenticationTicket.cs" />
-    <Compile Include="Ticket\UserAuthenticationTicket.cs" />
-    <Compile Include="Provider\CacheUserAuthenticationTicketProvider.cs" />
-    <Compile Include="UserAuthentication.cs" />
-    <Compile Include="UserAuthenticationModule.cs" />
+    <Compile Include="Authentication\User\Provider\CacheUserAuthenticationTicketProvider.cs" />
+    <Compile Include="Authentication\User\Provider\IUserAuthenticationTicketProvider.cs" />
+    <Compile Include="Authentication\User\Provider\UserAuthenticationTicketProviderBase.cs" />
+    <Compile Include="Authentication\User\UserAuthentication.cs" />
+    <Compile Include="Authentication\User\UserAuthenticationModule.cs" />
+    <Compile Include="Authentication\User\UserAuthenticationTicket.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -126,6 +126,7 @@
     <Content Include="LICENSE.txt" />
     <Content Include="NOTICE.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <WorkDir>..\work</WorkDir>

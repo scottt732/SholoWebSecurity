@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,10 +23,10 @@ using System.Threading;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Security;
+using Sholo.Web.Security.Authentication.User.Provider;
 using Sholo.Web.Security.Configuration;
-using Sholo.Web.Security.Provider;
 
-namespace Sholo.Web.Security
+namespace Sholo.Web.Security.Authentication.User
 {
     /// <summary>
     /// UserAuthentication exposes a public API for use in working with 

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-using System.Web;
+using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security
+namespace Sholo.Web.Security.Authentication.Device
 {
     /// <summary>
     /// 
     /// </summary>
-    public sealed class DeviceAuthenticationModule : IHttpModule
+    public class DeviceAuthenticationTicket : BaseAuthenticationTicket
     {
-        public void Init(HttpApplication context)
-        {
-        }
+        /// <summary>
+        /// The User-Agent of the device who initially received the
+        /// DeviceAuthenticationTicket
+        /// </summary>
+        public string UserAgent { get; set; }
 
-        public void Dispose()
-        {
-        }
+        /// <summary>
+        /// The HostAddress of the device that initially received the
+        /// DeviceAuthenticationTicket
+        /// </summary>
+        public string HostAddress { get; set; }
     }
 }

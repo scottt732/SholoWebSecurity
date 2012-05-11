@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Caching;
-using Sholo.Web.Security.Ticket;
+using Sholo.Web.Security.Authentication.User;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security.Authentication.Device.Provider
 {
     public class CacheDeviceAuthenticationTicketProvider : DeviceAuthenticationTicketProviderBase
     {
@@ -259,6 +259,16 @@ namespace Sholo.Web.Security.Provider
                 return false;
             }
             return false;
+        }
+
+        public override IEnumerable<string> GetDeviceUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerable<string> GetDeviceTicketsByHostAddress(string hostAddress)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

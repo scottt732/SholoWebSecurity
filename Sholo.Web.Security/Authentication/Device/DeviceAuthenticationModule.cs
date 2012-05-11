@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-namespace Sholo.Web.Security.Ticket
+using System.Web;
+
+namespace Sholo.Web.Security.Authentication.Device
 {
     /// <summary>
     /// 
     /// </summary>
-    public class DeviceAuthenticationTicket : BaseAuthenticationTicket
+    public sealed class DeviceAuthenticationModule : IHttpModule
     {
-        /// <summary>
-        /// The User-Agent of the device who initially received the
-        /// DeviceAuthenticationTicket
-        /// </summary>
-        public string UserAgent { get; set; }
+        public void Init(HttpApplication context)
+        {
+        }
 
-        /// <summary>
-        /// The HostAddress of the device that initially received the
-        /// DeviceAuthenticationTicket
-        /// </summary>
-        public string HostAddress { get; set; }
+        public void Dispose()
+        {
+        }
     }
 }

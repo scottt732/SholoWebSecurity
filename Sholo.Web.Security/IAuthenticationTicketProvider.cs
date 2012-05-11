@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sholo.Web.Security.Provider
+namespace Sholo.Web.Security
 {
     /// <summary>
     /// IAuthenticationTicketProvider defines the core contract that a ticket manager must implement in 
