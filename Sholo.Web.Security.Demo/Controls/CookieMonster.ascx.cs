@@ -25,7 +25,6 @@ using System.Web.Security;
 using Sholo.Web.Security;
 using Sholo.Web.Security.Analysis;
 using Sholo.Web.Security.Authentication.User;
-using Sholo.Web.Security.Ticket;
 
 public partial class User_controls_CookieMonster : System.Web.UI.UserControl
 {

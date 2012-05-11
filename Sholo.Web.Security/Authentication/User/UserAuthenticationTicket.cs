@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-using Sholo.Web.Security.Ticket;
-
 namespace Sholo.Web.Security.Authentication.User
 {
     ///<summary>

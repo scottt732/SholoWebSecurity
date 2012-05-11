@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Sholo.Web.Security
+namespace Sholo.Web.Security.Analysis
 {
     ///<summary>
     /// The status of the FormsAuthenticationTicket's relating to presence 

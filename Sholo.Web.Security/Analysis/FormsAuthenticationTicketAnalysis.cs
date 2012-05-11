@@ -1,7 +1,6 @@
 using System;
 using System.Web.Security;
 using Sholo.Web.Security.Authentication.User;
-using Sholo.Web.Security.Ticket;
 
 namespace Sholo.Web.Security.Analysis
 {
