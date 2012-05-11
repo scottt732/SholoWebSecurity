@@ -103,7 +103,7 @@
     <Compile Include="Penalties\Provider\PenaltyRuleProviderManager.cs" />
     <Compile Include="Configuration\PenaltyRulesCollection.cs" />
     <Compile Include="Penalties\Provider\PenaltyRulesProviderBase.cs" />
-    <Compile Include="Penalties\RuleType.cs" />
+    <Compile Include="Penalties\TriggerType.cs" />
     <Compile Include="Penalties\Provider\XmlPenaltyRulesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication\User\Provider\CacheUserAuthenticationTicketProvider.cs" />

@@ -1,8 +1,24 @@
+/*
+ * Copyright 2010-2012, Scott Holodak, Alex Friedman
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 using System;
 using System.Collections.Generic;
 using Sholo.Web.Security.Configuration;
 
-namespace Sholo.Web.Security.Penalties
+namespace Sholo.Web.Security.Penalties.Provider
 {
     public class XmlPenaltyRulesProvider : PenaltyRulesProviderBase
     {
@@ -22,32 +38,32 @@ namespace Sholo.Web.Security.Penalties
                 PenaltyRule rule = null;
                 if (rulesElement.Points != 0)
                 {
-                    rule = new PenaltyRule(RuleType.Points, rulesElement.PointsSince);
+                    rule = new PenaltyRule(TriggerType.Points, rulesElement.PointsSince);
                 }
                 else if (rulesElement.SuspiciousRequestsCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.SuspiciousRequest, rulesElement.SuspiciousRequestsSince);
+                    rule = new PenaltyRule(TriggerType.SuspiciousRequest, rulesElement.SuspiciousRequestsSince);
                 }
                 else if (rulesElement.MaliciousRequestsCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.MaliciousRequest, rulesElement.MaliciousRequestsSince);
+                    rule = new PenaltyRule(TriggerType.MaliciousRequest, rulesElement.MaliciousRequestsSince);
                 }
                 else if (rulesElement.ExceptionsCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.Exception, rulesElement.ExceptionsSince);
+                    rule = new PenaltyRule(TriggerType.Exception, rulesElement.ExceptionsSince);
                     rule.ExceptionType = rulesElement.ExceptionType;
                 }
                 else if (rulesElement.WarningsCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.Warning, rulesElement.WarningsSince);
+                    rule = new PenaltyRule(TriggerType.Warning, rulesElement.WarningsSince);
                 }
                 else if (rulesElement.KicksCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.Kick, rulesElement.KicksSince);
+                    rule = new PenaltyRule(TriggerType.Kick, rulesElement.KicksSince);
                 }
                 else if (rulesElement.BansCount != 0)
                 {
-                    rule = new PenaltyRule(RuleType.Ban, rulesElement.BansSince);
+                    rule = new PenaltyRule(TriggerType.Ban, rulesElement.BansSince);
                 }
                 else
                 {

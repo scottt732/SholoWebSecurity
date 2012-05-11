@@ -1,30 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sholo.Web.Security", "Sholo.Web.Security\Sholo.Web.Security.csproj", "{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Sholo.Web.Security.Demo", "Sholo.Web.Security.Demo\", "{815DC7CD-26E7-423D-9FD1-9AFA2B264021}"
 	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		ProjectReferences = "{883a296e-c898-4d1f-9ed9-de7569defb3d}|Sholo.Web.Security.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
 		Debug.AspNetCompiler.PhysicalPath = "Sholo.Web.Security.Demo\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Sholo.Web.Security.Demo\"
 		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
-		ProjectReferences = "{883a296e-c898-4d1f-9ed9-de7569defb3d}|Sholo.Web.Security.dll;"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
 		Release.AspNetCompiler.PhysicalPath = "Sholo.Web.Security.Demo\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Sholo.Web.Security.Demo\"
 		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/Sholo.Web.Security.Demo"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "53596"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sholo.Web.Security.ConfigTest", "Sholo.Web.Security.ConfigTest\Sholo.Web.Security.ConfigTest.csproj", "{3A0F915D-61A3-4446-91E3-952765E09DCA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{83E2DCA5-FAC5-48E8-80A3-DB97EEF331FB}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,18 +37,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

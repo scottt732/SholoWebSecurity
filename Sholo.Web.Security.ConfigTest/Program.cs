@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using Sholo.Web.Security.Authentication.User;
 using Sholo.Web.Security.Penalties;
+using Sholo.Web.Security.Penalties.Provider;
 
 namespace Sholo.Web.Security.ConfigTest
 {
