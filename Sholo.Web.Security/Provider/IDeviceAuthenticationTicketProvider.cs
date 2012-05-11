@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,9 @@
 
 using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.State
+namespace Sholo.Web.Security.Provider
 {
-    public interface IDeviceAuthenticationTicketStore : ITicketStore<string, DeviceAuthenticationTicket>
+    public interface IDeviceAuthenticationTicketProvider : IAuthenticationTicketProvider<string, DeviceAuthenticationTicket>
     {
-
     }
 }

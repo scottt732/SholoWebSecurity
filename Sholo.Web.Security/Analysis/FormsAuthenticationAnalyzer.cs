@@ -318,7 +318,7 @@ namespace Sholo.Web.Security.Analysis
 
                     if (!string.IsNullOrEmpty(guid))
                     {
-                        UserAuthenticationTicket serverAuthenticationTicket = UserAuthentication.UserAuthenticationTicketStore.GetTicket(guid);
+                        UserAuthenticationTicket serverAuthenticationTicket = UserAuthentication.Provider.GetTicket(guid);
                         if (serverAuthenticationTicket != null)
                         {
                             analysis.UserDataServerAuthenticationTicketKeyFound = true;

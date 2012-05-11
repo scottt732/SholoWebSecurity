@@ -56,17 +56,17 @@ namespace Sholo.Web.Security
         private static void OnBeginRequest(object sender, EventArgs e)
         {
             UserAuthentication.Initialize();
-            UserAuthentication.UserAuthenticationTicketStore.RemoveExpiredTickets();
+            UserAuthentication.Provider.RemoveExpiredTickets();
         }
 
         /// <summary>
         /// Detects the creation of a FormsAuthenticationCookie and FormsAuthenticationTicket
         /// during the processing of the current request (i.e., PostBack of Login page/action),
         /// records the state of both in a UserAuthenticationTicket, and adds it to the 
-        /// UserAuthenticationTicketStore.
+        /// Provider.
         /// 
         /// In the event that this request was already authenticated, it detects and handles 
-        /// sliding expiration on the UserAuthenticationTicketStore.
+        /// sliding expiration on the Provider.
         /// </summary>
         /// <param name="sender">The HttpApplication that sent the request</param>
         /// <param name="e">Not used</param>
@@ -127,7 +127,7 @@ namespace Sholo.Web.Security
                             TicketHash = hash
                         };
 
-                        UserAuthentication.UserAuthenticationTicketStore.InsertTicket(userAuthTicket, postAnalyzer.FormsAuthenticationTicket.Expiration);
+                        UserAuthentication.Provider.InsertTicket(userAuthTicket, postAnalyzer.FormsAuthenticationTicket.Expiration);
 
                         FormsAuthenticationTicket newFormsAuthTicket = UserAuthentication.CreateFormsAuthTicket(
                             postAnalyzer.FormsAuthenticationTicket.Name,
@@ -145,7 +145,7 @@ namespace Sholo.Web.Security
                     {
                         if (preAnalyzer.UserAuthenticationTicket != null)
                         {
-                            UserAuthentication.UserAuthenticationTicketStore.RevokeTicket(preAnalyzer.UserAuthenticationTicket.Key);
+                            UserAuthentication.Provider.RevokeTicket(preAnalyzer.UserAuthenticationTicket.Key);
                         }
                         UserAuthentication.ClearAuthCookie();
 
@@ -163,7 +163,7 @@ namespace Sholo.Web.Security
             else if (status == FormsAuthenticationStatus.Valid)
             {
                 // TODO: Handle sliding ticket expiration
-                // UserAuthentication.UserAuthenticationTicketStore.UpdateTicketExpiration();
+                // UserAuthentication.Provider.UpdateTicketExpiration();
             }
         }
     }

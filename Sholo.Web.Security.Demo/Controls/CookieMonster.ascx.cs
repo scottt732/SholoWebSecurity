@@ -240,7 +240,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
             string originalKey = Request["OriginalTicketKey"];
             string newKey = ServerKey.Text;
 
-            UserAuthentication.UserAuthenticationTicketStore.RevokeTicket(originalKey);
+            UserAuthentication.Provider.RevokeTicket(originalKey);
 
             UserAuthenticationTicket serverAuthenticationTicket = new UserAuthenticationTicket();
             serverAuthenticationTicket.Key = ServerKey.Text;
@@ -268,7 +268,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
                 serverAuthenticationTicket.TicketIssueDate = ticketIssueDate;
             }
 
-            UserAuthentication.UserAuthenticationTicketStore.InsertTicket(serverAuthenticationTicket, ticketExpiration);
+            UserAuthentication.Provider.InsertTicket(serverAuthenticationTicket, ticketExpiration);
         }
 
         Response.Redirect(Request.RawUrl, false);

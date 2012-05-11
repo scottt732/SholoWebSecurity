@@ -21,9 +21,9 @@ namespace Sholo.Web.Security.Configuration
 {
     public class DeviceAuthenticationTicketProviderCollection : ProviderCollection
     {
-        public new DeviceAuthenticationTicketProvider this[string name]
+        public new DeviceAuthenticationTicketProviderBase this[string name]
         {
-            get { return (DeviceAuthenticationTicketProvider)base[name]; }
+            get { return (DeviceAuthenticationTicketProviderBase)base[name]; }
         }
     }
 }

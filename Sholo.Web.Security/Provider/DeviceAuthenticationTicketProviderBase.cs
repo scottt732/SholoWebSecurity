@@ -17,26 +17,20 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
-using Sholo.Web.Security.State;
 using Sholo.Web.Security.Ticket;
 
 namespace Sholo.Web.Security.Provider
 {
-    public abstract class UserAuthenticationTicketProvider : ProviderBase, IUserAuthenticationTicketStore
+    public abstract class DeviceAuthenticationTicketProviderBase : ProviderBase, IDeviceAuthenticationTicketProvider
     {
-        public abstract void Initialize();
         public abstract void RemoveExpiredTickets();
-        public abstract UserAuthenticationTicket GetTicket(string ticketKey);
-        public abstract void InsertTicket(UserAuthenticationTicket ticket, DateTime expiration);
-        public abstract void UpdateTicketExpiration(UserAuthenticationTicket ticket, DateTime newExpiration);
+        public abstract DeviceAuthenticationTicket GetTicket(string ticketKey);
+        public abstract void InsertTicket(DeviceAuthenticationTicket ticket, DateTime expiration);
+        public abstract void UpdateTicketExpiration(DeviceAuthenticationTicket ticket, DateTime newExpiration);
         public abstract void RevokeTicket(string ticketKey);
         public abstract bool ContainsTicket(string ticketKey);
-        public abstract IEnumerable<UserAuthenticationTicket> GetAllTickets();
+        public abstract IEnumerable<DeviceAuthenticationTicket> GetAllTickets();
         public abstract IEnumerable<string> GetAllTicketKeys();
-        public abstract bool VerifyTicket(UserAuthenticationTicket ticket);
-        public abstract void RevokeUserTickets(string username);
-        public abstract IEnumerable<UserAuthenticationTicket> GetUserTickets(string username);
-        public abstract IEnumerable<string> GetUserTicketKeys(string username);
-        public abstract IEnumerable<string> GetAllTicketedUsers();
+        public abstract bool VerifyTicket(DeviceAuthenticationTicket ticket);
     }
 }

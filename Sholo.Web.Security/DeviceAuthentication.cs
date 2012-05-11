@@ -31,7 +31,7 @@ namespace Sholo.Web.Security
         private static readonly object LockObject;
         private static bool _initialized;
 
-        private static DeviceAuthenticationTicketProvider defaultProvider;
+        private static DeviceAuthenticationTicketProviderBase defaultProvider;
         private static DeviceAuthenticationTicketProviderCollection providers;
 
         static DeviceAuthentication()
@@ -67,7 +67,7 @@ namespace Sholo.Web.Security
             }
         }
 
-        public static DeviceAuthenticationTicketProvider Provider
+        public static DeviceAuthenticationTicketProviderBase Provider
         {
             get
             {

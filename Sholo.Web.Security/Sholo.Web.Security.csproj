@@ -90,8 +90,11 @@
     <Compile Include="EnhancedSecurityModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\CacheDeviceAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\DeviceAuthenticationTicketProvider.cs" />
-    <Compile Include="Provider\UserAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\DeviceAuthenticationTicketProviderBase.cs" />
+    <Compile Include="Provider\IAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\IDeviceAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\IUserAuthenticationTicketProvider.cs" />
+    <Compile Include="Provider\UserAuthenticationTicketProviderBase.cs" />
     <Compile Include="RequestProfiler.cs" />
     <Compile Include="RequestProfilerModule.cs" />
     <Compile Include="Ticket\BaseAuthenticationTicket.cs" />
@@ -99,9 +102,6 @@
     <Compile Include="Ticket\IAuthenticationTicket.cs" />
     <Compile Include="Ticket\UserAuthenticationTicket.cs" />
     <Compile Include="Provider\CacheUserAuthenticationTicketProvider.cs" />
-    <Compile Include="State\IDeviceAuthenticationTicketStore.cs" />
-    <Compile Include="State\ITicketStore.cs" />
-    <Compile Include="State\IUserAuthenticationTicketStore.cs" />
     <Compile Include="UserAuthentication.cs" />
     <Compile Include="UserAuthenticationModule.cs" />
   </ItemGroup>

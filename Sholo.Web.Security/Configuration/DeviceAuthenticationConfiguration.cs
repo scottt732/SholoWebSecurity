@@ -31,6 +31,43 @@ namespace Sholo.Web.Security.Configuration
                 ?? new DeviceAuthenticationConfiguration();
         }
 
+        [ConfigurationProperty("enforceClientHostAddressValidation", DefaultValue = "true", IsRequired = false)]
+        public bool EnforceClientHostAddressValidation
+        {
+            get
+            {
+                bool result = true;
+                if (this["enforceClientHostAddressValidation"] != null)
+                {
+                    bool.TryParse(this["enforceClientHostAddressValidation"].ToString(), out result);
+                }
+                return result;
+            }
+        }
+
+        [ConfigurationProperty("enforceUserAgentValidation", DefaultValue = "false", IsRequired = false)]
+        public bool EnforceUserAgentValidation
+        {
+            get
+            {
+                bool result = true;
+                if (this["enforceUserAgentValidation"] != null)
+                {
+                    bool.TryParse(this["enforceUserAgentValidation"].ToString(), out result);
+                }
+                return result;
+            }
+        }
+
+        [ConfigurationProperty("hashSalt", DefaultValue = "S%OV6O7L7Dtuq@EEzS&Vfu9uWO&Wrn5DejYxakxcSeMW*JlS!X@hsfEJroei!L7@Z80LQ5^z8RbYRE1M@bwJGFnZSvikZtpvNVHcoDFl*$oY7%XNDBxvh6JbAIS93RI^j", IsRequired = false)]
+        public string HashSalt
+        {
+            get
+            {
+                return this["hashSalt"] as string;
+            }
+        }
+
         [ConfigurationProperty("providers")]
         public ProviderSettingsCollection Providers
         {

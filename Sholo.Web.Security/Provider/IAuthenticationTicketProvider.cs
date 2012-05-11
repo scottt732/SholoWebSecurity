@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,15 +17,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sholo.Web.Security.State
+namespace Sholo.Web.Security.Provider
 {
     /// <summary>
-    /// ITicketStore defines the core contract that a ticket manager must implement in 
+    /// IAuthenticationTicketProvider defines the core contract that a ticket manager must implement in 
     /// order to support the UserAuthenticationTicket and/or DeviceAuthenticationTicket features.
     /// </summary>
     /// <typeparam name="TKey">The type of the key that identifies the ticket</typeparam>
     /// <typeparam name="TTicket">The type of the ticket to store</typeparam>
-    public interface ITicketStore<TKey, TTicket>
+    public interface IAuthenticationTicketProvider<TKey, TTicket>
     {
         /// <summary>
         /// You retrieve EnhancedSecurity properties in the constructor or else you will cause 
@@ -33,7 +33,7 @@ namespace Sholo.Web.Security.State
         /// relevant controls when its initialization is complete.  In Initialize(), you can 
         /// retrieve properties from EnhancedSecurity.
         /// </summary>
-        void Initialize();
+        void Initialize(string name, System.Collections.Specialized.NameValueCollection config);
 
         /// <summary>
         /// Removes expired entries from the ticket store

@@ -27,7 +27,7 @@ namespace Sholo.Web.Security.Ticket
     public interface IAuthenticationTicket
     {
         /// <summary>
-        /// A GUID serving as the primary key in the UserAuthenticationTicketStore
+        /// A GUID serving as the primary key in the Provider
         /// </summary>
         string Key { get; set; }
 
@@ -92,7 +92,7 @@ namespace Sholo.Web.Security.Ticket
         /// <summary>
         /// Readonly property which indicates whether or not the ValidUntilDate is in
         /// the past (i.e., the ticket is expired).  IsExpired tickets should/will be 
-        /// purged from the UserAuthenticationTicketStore during the RemoveExpiredTickets() call,
+        /// purged from the Provider during the RemoveExpiredTickets() call,
         /// during the BeginRequest event handler.
         /// </summary>
         bool TicketExpired

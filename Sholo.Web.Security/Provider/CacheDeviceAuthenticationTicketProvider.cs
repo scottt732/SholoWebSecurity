@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
 using System.Web.Caching;
 using Sholo.Web.Security.Ticket;
 
 namespace Sholo.Web.Security.Provider
 {
-    public class CacheDeviceAuthenticationTicketProvider : DeviceAuthenticationTicketProvider
+    public class CacheDeviceAuthenticationTicketProvider : DeviceAuthenticationTicketProviderBase
     {
         /// <summary>
         /// This prefix is prepended to ticket key as the key to the cache.
@@ -17,9 +18,25 @@ namespace Sholo.Web.Security.Provider
         /// <summary>
         /// Initializes the CacheUserAuthenticationTicketProvider module.
         /// </summary>
-        public override void Initialize()
+        public override void Initialize(string name, NameValueCollection config)
         {
-            // Do nothing
+            if (config == null)
+            {
+                throw new ArgumentNullException("config");
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                name = "CacheDeviceAuthenticationTicketProvider";
+            }
+
+            if (string.IsNullOrEmpty(config["description"]))
+            {
+                config.Remove("description");
+                config.Add("description", "Cache-based device authentication provider");
+            }
+
+            base.Initialize(name, config);
         }
 
         /// <summary>

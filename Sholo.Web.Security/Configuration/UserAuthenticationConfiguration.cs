@@ -23,7 +23,7 @@ namespace Sholo.Web.Security.Configuration
     /// </summary>
     public class UserAuthenticationConfiguration : ConfigurationSection
     {
-        private const string ConfigurationSectionName = "userAuthentication";
+        private const string ConfigurationSectionName = "sholo.web/userAuthentication";
 
         /// <summary>
         /// The UserAuthenticationConfiguration configuration element defined 

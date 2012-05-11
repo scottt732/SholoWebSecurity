@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Configuration.Provider;
 using Sholo.Web.Security.Provider;
 
@@ -21,9 +22,24 @@ namespace Sholo.Web.Security.Configuration
 {
     public class UserAuthenticationTicketProviderCollection : ProviderCollection
     {
-        public new UserAuthenticationTicketProvider this[string name]
+        public new UserAuthenticationTicketProviderBase this[string name]
         {
-            get { return (UserAuthenticationTicketProvider) base[name]; }
+            get { return (UserAuthenticationTicketProviderBase) base[name]; }
+        }
+
+        public override void Add(ProviderBase provider)
+        {
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+
+            if (!(provider is UserAuthenticationTicketProviderBase))
+            {
+                throw new ArgumentException("Invalid provider type", "provider");
+            }
+
+            base.Add(provider);
         }
     }
 }

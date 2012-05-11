@@ -40,14 +40,14 @@ namespace Sholo.Web.Security
         ///     </item>
         ///     <item>
         ///         The FormsAuthenticationTicket does not have a corresponding 
-        ///         UserAuthenticationTicket in the UserAuthenticationTicketStore.  This could be
+        ///         UserAuthenticationTicket in the Provider.  This could be
         ///         because the ticket has expired on the server, was explicitly
         ///         revoked, or was maliciously crafted by an attacker.
         ///     </item>
         ///     <item>
         ///         The FormsAuthenticationCookie and/or the FormsAuthenticationTicket
         ///         contained in it do not match the UserAuthenticationTicket in
-        ///         in the UserAuthenticationTicketStore.  This generally indicates that the ticket
+        ///         in the Provider.  This generally indicates that the ticket
         ///         has been tampered with.
         ///     </item>
         /// </list>

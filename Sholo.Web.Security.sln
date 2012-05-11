@@ -24,12 +24,18 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Sholo.Web.Security.Demo", "
 		VWDPort = "53596"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sholo.Web.Security.ConfigTest", "Sholo.Web.Security.ConfigTest\Sholo.Web.Security.ConfigTest.csproj", "{3A0F915D-61A3-4446-91E3-952765E09DCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0F915D-61A3-4446-91E3-952765E09DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{815DC7CD-26E7-423D-9FD1-9AFA2B264021}.Release|Any CPU.ActiveCfg = Debug|Any CPU

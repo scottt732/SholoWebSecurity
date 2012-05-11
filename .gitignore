@@ -4,4 +4,4 @@ _Resharper.*
 obj
 bin
 packages
-
+Sholo.Web.Security.ConfigTest

@@ -17,6 +17,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web;
 using System.Web.Caching;
 using Sholo.Web.Security.Ticket;
@@ -24,12 +25,12 @@ using Sholo.Web.Security.Ticket;
 namespace Sholo.Web.Security.Provider
 {
     /// <summary>
-    /// An IUserAuthenticationTicketStore implementation that relies on the ASP.NET Caching model for ticket 
+    /// An IUserAuthenticationTicketProvider implementation that relies on the ASP.NET Caching model for ticket 
     /// storage.  Generally this implies that the ticket storage is maintained locally on the web
     /// server (either in memory or on disk).  A limitation of this model is that it will not 
     /// support clustered, load balanced, or round-robin style configurations.
     /// </summary>
-    public sealed class CacheUserAuthenticationTicketProvider : UserAuthenticationTicketProvider
+    public sealed class CacheUserAuthenticationTicketProvider : UserAuthenticationTicketProviderBase
     {
         /// <summary>
         /// This prefix is prepended to ticket key as the key to the cache.
@@ -37,17 +38,27 @@ namespace Sholo.Web.Security.Provider
         private const string UserTicketKeyPrefix = "USER::";
 
         /// <summary>
-        /// The constructor is marked internal because this object is not suitable for use 
-        /// outside of this assembly.
-        /// </summary>
-        internal CacheUserAuthenticationTicketProvider() { }
-
-        /// <summary>
         /// Initializes the CacheUserAuthenticationTicketProvider module.
         /// </summary>
-        public override void Initialize()
+        public override void Initialize(string name, NameValueCollection config)
         {
-            // Do nothing
+            if (config == null)
+            {
+                throw new ArgumentNullException("config");
+            } 
+            
+            if (string.IsNullOrEmpty(name)) 
+            {
+                name = "CacheUserAuthenticationTicketProvider";      
+            }
+
+            if (string.IsNullOrEmpty (config["description"]))
+            {
+                config.Remove("description");
+                config.Add("description", "Cache-based user authentication provider");
+            } 
+
+            base.Initialize(name, config);
         }
 
         /// <summary>

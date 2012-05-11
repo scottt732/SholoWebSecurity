@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2010-2012, Scott Holodak
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,13 @@ using System;
 using System.Collections.Generic;
 using Sholo.Web.Security.Ticket;
 
-namespace Sholo.Web.Security.State
+namespace Sholo.Web.Security.Provider
 {
     /// <summary>
-    /// IUserAuthenticationTicketStore defines the core contract that a ticket manager must implement in 
+    /// IUserAuthenticationTicketProvider defines the core contract that a ticket manager must implement in 
     /// order to support the UserAuthenticationTicket features.
     /// </summary>
-    public interface IUserAuthenticationTicketStore : ITicketStore<string, UserAuthenticationTicket>
+    public interface IUserAuthenticationTicketProvider : IAuthenticationTicketProvider<string, UserAuthenticationTicket>
     {
         /// <summary>
         /// Revoke all tickets corresponding to the supplied Username.

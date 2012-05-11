@@ -25,7 +25,6 @@ using System.Web.Configuration;
 using System.Web.Security;
 using Sholo.Web.Security.Configuration;
 using Sholo.Web.Security.Provider;
-using Sholo.Web.Security.State;
 
 namespace Sholo.Web.Security
 {
@@ -68,8 +67,8 @@ namespace Sholo.Web.Security
         private static bool _enforceUserAgentValidation;
         private static string _hashSalt;
         private static string _stateProvider;
-        private static IUserAuthenticationTicketStore _userAuthenticationTicketStore;
-
+        private static UserAuthenticationTicketProviderCollection _providers;
+        private static IUserAuthenticationTicketProvider _provider;
         #endregion
 
         #region Methods
@@ -132,21 +131,29 @@ namespace Sholo.Web.Security
                                 throw new ConfigurationErrorsException("TODO");
                             }
 
-                            _stateProvider = UserAuthenticationConfig.StateProvider;
-                            var providerSettings = UserAuthenticationConfig.Providers[_stateProvider];
+                            _providers = new UserAuthenticationTicketProviderCollection();                            
+                            ProvidersHelper.InstantiateProviders(UserAuthenticationConfig.Providers, _providers, typeof (UserAuthenticationTicketProviderBase));
 
+                            _provider = _providers[UserAuthenticationConfig.StateProvider];
+                            // _provider = (IUserAuthenticationTicketProvider)ProvidersHelper.InstantiateProvider(providerSettings, typeof(UserAuthenticationTicketProviderBase));
+
+                            // _provider = 
+                            // _stateProvider = UserAuthenticationConfig.StateProvider;
+                            // ProvidersHelper.InstantiateProviders();
+                            
+                            // var providerSettings = UserAuthenticationConfig.Providers[_stateProvider];
+                            /*
                             if (providerSettings == null)
                             {
                                 // TODO: Add exception text
                                 throw new ConfigurationErrorsException("TODO");
                             }
-
-                            _userAuthenticationTicketStore = (IUserAuthenticationTicketStore) ProvidersHelper.InstantiateProvider(providerSettings, typeof (UserAuthenticationTicketProvider));
+                            */
 
                             _enforceClientHostAddressValidation = UserAuthenticationConfig.EnforceClientHostAddressValidation;
                             _enforceUserAgentValidation = UserAuthenticationConfig.EnforceUserAgentValidation;
 
-                            /* TODO: Implement/fix sliding UserAuthenticationTicketStore expiration */
+                            /* TODO: Implement/fix sliding Provider expiration */
                             _hashSalt = UserAuthenticationConfig.HashSalt;
                         }
                         else
@@ -163,18 +170,13 @@ namespace Sholo.Web.Security
                         _initialized = true;
                     }
                 }
-
-                if (_enabled)
-                {
-                    if (UserAuthenticationTicketStore != null) UserAuthenticationTicketStore.Initialize();
-                }
             }
         }
         /// <summary>
         /// Calculates the hash of the FormsAuthenticationTicket's properties 
         /// concatenated together with the salt.  This is used as a first line of 
         /// defense against ticket tampering to potentially avoid an unnecessary read
-        /// from the UserAuthenticationTicketStore.
+        /// from the Provider.
         /// </summary>
         /// <param name="formsAuthenticationTicket">the formsAuthenticationTicket to 
         /// compute the hash of</param>
@@ -316,7 +318,7 @@ namespace Sholo.Web.Security
 
         /// <summary>
         /// Creates an HttpCookie containing an encrypted FormsAuthenticationTicket.
-        /// The ticket must contain an hash and key into the UserAuthenticationTicketStore.
+        /// The ticket must contain an hash and key into the Provider.
         /// </summary>
         /// <param name="ticket">The FormsAuthenticationTicket to encode</param>
         /// <returns>An HttpCookie containing the encrypted FormsAuthenticationTicket</returns>
@@ -366,12 +368,12 @@ namespace Sholo.Web.Security
         /// <summary>
         /// Creates a FormsAuthenticationTicket for storage on the client.
         /// The UserData field contains the server key, which can be 
-        /// used by the server-side UserAuthenticationTicketStore to retrieve validation data 
+        /// used by the server-side Provider to retrieve validation data 
         /// and additional details about the ticket (e.g. IP address)
         /// </summary>
         /// <param name="username">User associated with the ticket</param>
         /// <param name="cookiePath">Relative path on server in which cookie is valid</param>
-        /// <param name="serverKey">UserAuthenticationTicketStore key</param>
+        /// <param name="serverKey">Provider key</param>
         /// <param name="validFromDate">Ticket valid from date</param>
         /// <param name="validUntilDate">Ticket valid to date</param>
         /// <param name="persistent">Ticket can persist across browser sessions</param>
@@ -444,16 +446,16 @@ namespace Sholo.Web.Security
 
         /// <summary>
         /// An instance of the provider specified in the TicketStoreProvider property.
-        /// The UserAuthenticationTicketStore allows access to validation-related information about outstanding 
+        /// The Provider allows access to validation-related information about outstanding 
         /// FormsAuthenticationCookies and FormsAuthenticationTickets along with the host 
         /// address of the client that initially requested the ticket.
         /// </summary>
-        public static IUserAuthenticationTicketStore UserAuthenticationTicketStore
+        public static IUserAuthenticationTicketProvider Provider
         {
             get
             {
                 Initialize();
-                return _userAuthenticationTicketStore;
+                return _provider;
             }
         }
 
