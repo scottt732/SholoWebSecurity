@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2012, Scott Holodak
+ * Copyright 2010-2012, Scott Holodak, Alex Friedman
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ namespace Sholo.Web.Security.Authentication.Device
     /// <summary>
     /// 
     /// </summary>
-    public sealed class DeviceAuthentication
+    public static sealed class DeviceAuthentication
     {
         // Thread-safe initialization
         private static readonly object LockObject;
         private static bool _initialized;
 
-        private static DeviceAuthenticationTicketProviderBase defaultProvider;
-        private static DeviceAuthenticationTicketProviderCollection providers;
+        private static DeviceAuthenticationTicketProviderBase _provider;
+        private static DeviceAuthenticationTicketProviderCollection _providers;
 
         static DeviceAuthentication()
         {
@@ -52,15 +52,13 @@ namespace Sholo.Web.Security.Authentication.Device
                         if (configuration == null)
                             throw new ConfigurationErrorsException("DeviceAuthentication configuration section is not configured correctly.");
 
-                        providers = new DeviceAuthenticationTicketProviderCollection();
+                        _providers = new DeviceAuthenticationTicketProviderCollection();
+                        ProvidersHelper.InstantiateProviders(configuration.Providers, _providers, typeof (DeviceAuthenticationTicketProviderCollection));
+                        _providers.SetReadOnly();
 
-                        ProvidersHelper.InstantiateProviders(configuration.Providers, providers, typeof (DeviceAuthenticationTicketProviderCollection));
+                        _provider = _providers[configuration.StateProvider];
 
-                        providers.SetReadOnly();
-
-                        defaultProvider = providers[configuration.StateProvider];
-
-                        if (defaultProvider == null)
+                        if (_provider == null)
                             throw new Exception("defaultProvider");
                     }
                 }
@@ -72,7 +70,7 @@ namespace Sholo.Web.Security.Authentication.Device
             get
             {
                 Initialize();
-                return defaultProvider;
+                return _provider;
             }
         }
 
@@ -81,7 +79,7 @@ namespace Sholo.Web.Security.Authentication.Device
             get
             {
                 Initialize();
-                return providers;
+                return _providers;
             }
         }
     }

@@ -1,5 +1,5 @@
-﻿Sholo Web Security Module
-Copyright 2010-2012, Scott Holodak.
+﻿Sholo.Web.Security Module
+Copyright 2010-2012, Scott Holodak, Alex Friedman
 
 This software contains code derived from the JA-SIG 
 DotNetCasClient (http://www.jasig.org/),  a .NET 

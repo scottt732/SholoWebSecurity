@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2012, Scott Holodak
+ * Copyright 2010-2012, Scott Holodak, Alex Friedman
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ namespace Sholo.Web.Security.Authentication.User
     /// UserAuthentication exposes a public API for use in working with 
     /// stateful Forms Authentication in the .NET Framework.
     /// </summary>
-    public sealed class UserAuthentication
+    public static sealed class UserAuthentication
     {
         #region Fields
         ///<summary>
@@ -133,22 +133,9 @@ namespace Sholo.Web.Security.Authentication.User
 
                             _providers = new UserAuthenticationTicketProviderCollection();                            
                             ProvidersHelper.InstantiateProviders(UserAuthenticationConfig.Providers, _providers, typeof (UserAuthenticationTicketProviderBase));
+                            _providers.SetReadOnly();
 
                             _provider = _providers[UserAuthenticationConfig.StateProvider];
-                            // _provider = (IUserAuthenticationTicketProvider)ProvidersHelper.InstantiateProvider(providerSettings, typeof(UserAuthenticationTicketProviderBase));
-
-                            // _provider = 
-                            // _stateProvider = UserAuthenticationConfig.StateProvider;
-                            // ProvidersHelper.InstantiateProviders();
-                            
-                            // var providerSettings = UserAuthenticationConfig.Providers[_stateProvider];
-                            /*
-                            if (providerSettings == null)
-                            {
-                                // TODO: Add exception text
-                                throw new ConfigurationErrorsException("TODO");
-                            }
-                            */
 
                             _enforceClientHostAddressValidation = UserAuthenticationConfig.EnforceClientHostAddressValidation;
                             _enforceUserAgentValidation = UserAuthenticationConfig.EnforceUserAgentValidation;
