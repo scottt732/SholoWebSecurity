@@ -32,7 +32,7 @@ namespace Sholo.Web.Security.Authentication.User
     /// UserAuthentication exposes a public API for use in working with 
     /// stateful Forms Authentication in the .NET Framework.
     /// </summary>
-    public static sealed class UserAuthentication
+    public sealed class UserAuthentication
     {
         #region Fields
         ///<summary>

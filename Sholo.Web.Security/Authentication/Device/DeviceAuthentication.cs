@@ -25,7 +25,7 @@ namespace Sholo.Web.Security.Authentication.Device
     /// <summary>
     /// 
     /// </summary>
-    public static sealed class DeviceAuthentication
+    public sealed class DeviceAuthentication
     {
         // Thread-safe initialization
         private static readonly object LockObject;
