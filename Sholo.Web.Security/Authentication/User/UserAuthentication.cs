@@ -95,19 +95,12 @@ namespace Sholo.Web.Security.Authentication.User
                         AuthenticationConfig = (AuthenticationSection)WebConfigurationManager.GetSection("system.web/authentication");
                         UserAuthenticationConfig = UserAuthenticationConfiguration.GetConfig();
 
-                        if (UserAuthenticationConfig == null)
+                        if (UserAuthenticationConfig != null)
                         {
-                            _enabled = false;
-                        }
-                        else
-                        {
-                            _enabled = UserAuthenticationConfig.Enabled;
-                        }
+                            _enabled = true;
+                        
+                            _hashAlgorithm = new SHA512Managed();
 
-                        _hashAlgorithm = new SHA512Managed();
-
-                        if (_enabled)
-                        {
                             if (AuthenticationConfig == null)
                             {
                                 throw new ConfigurationErrorsException("The UserAuthenticationModule requires Forms authentication to be enabled in web.config.");
@@ -145,6 +138,8 @@ namespace Sholo.Web.Security.Authentication.User
                         }
                         else
                         {
+                            _enabled = false;
+                            
                             if (AuthenticationConfig != null && AuthenticationConfig.Mode == AuthenticationMode.Forms)
                             {
                                 _formsTimeout = AuthenticationConfig.Forms.Timeout;

@@ -26,11 +26,42 @@ namespace Sholo.Web.Security.ConfigTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(UserAuthentication.Enabled);
-            List<PenaltyRule> list = new List<PenaltyRule>(PenaltyRuleProviderManager.GetAllRules());
-            Console.WriteLine(list.Count);
-            
-            Console.ReadLine();
+            Console.WriteLine("UserAuthentication: {0}", UserAuthentication.Enabled);
+            if (UserAuthentication.Enabled)
+            {
+                Console.WriteLine("EnforceClientHostAddressValidation: {0}", UserAuthentication.EnforceClientHostAddressValidation);
+                Console.WriteLine("EnforceUserAgentValidation: {0}", UserAuthentication.EnforceUserAgentValidation);
+                Console.WriteLine("FormsTimeout: {0}", UserAuthentication.FormsTimeout);
+                Console.WriteLine("HashAlgorithm: {0}", UserAuthentication.HashAlgorithm);
+                Console.WriteLine("HashSalt: {0}", UserAuthentication.HashSalt);
+                Console.WriteLine("StateProvider: {0}", UserAuthentication.StateProvider);
+                Console.WriteLine("Provider: {0}", UserAuthentication.Provider.GetType().FullName);
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("User Penalties: {0}", UserPenalties.Enabled);
+            if (UserPenalties.Enabled)
+            {
+                List<PenaltyRule> list = new List<PenaltyRule>(UserPenalties.GetAllRules());
+                Console.WriteLine(list.Count);
+            }
+
+            string line;
+            while (FetchCommand(out line))
+            {
+                DispatchCommand(line);
+            }
+        }
+
+        private static bool FetchCommand(out string line)
+        {
+            Console.Write("> ");
+            line = Console.ReadLine();
+            return !string.IsNullOrEmpty(line) && line.IndexOf("exit", StringComparison.InvariantCultureIgnoreCase) < 0;
+        }
+
+        private static void DispatchCommand(string line)
+        {
         }
     }
 }
