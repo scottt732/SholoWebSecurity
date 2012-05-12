@@ -15,6 +15,7 @@
  */
 
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web.Configuration;
 using Sholo.Web.Security.Configuration;
 using Sholo.Web.Security.Penalties.Provider;
@@ -46,25 +47,27 @@ namespace Sholo.Web.Security.Penalties
                 {
                     if (!_initialized)
                     {
-                        var configuration = PenaltiesConfiguration.Penalties;
+                        var configuration = PenaltiesConfiguration.GetConfig();
 
                         if (configuration != null)
                         {
                             _enabled = true;
 
                             _providers = new PenaltyRuleProviderCollection();
-                            ProvidersHelper.InstantiateProviders(configuration.Providers, Providers, typeof (PenaltyRulesProviderBase));
+                            ProvidersHelper.InstantiateProviders(configuration.Providers, _providers, typeof (PenaltyRulesProviderBase));
 
-                            if (Providers.Count == 0)
+                            if (_providers.Count == 0)
                             {
                                 XmlPenaltyRulesProvider xmlProvider = new XmlPenaltyRulesProvider();
                                 _providers.Add(xmlProvider);
-                                xmlProvider.Initialize();
+
+                                // TODO: Check this
+                                xmlProvider.Initialize("XmlPenaltiesProvider", new NameValueCollection());
                             }
-                            Providers.SetReadOnly();
+                            _providers.SetReadOnly();
 
                             _allRules = new List<PenaltyRule>();
-                            foreach (PenaltyRulesProviderBase provider in Providers)
+                            foreach (PenaltyRulesProviderBase provider in _providers)
                             {
                                 IEnumerable<PenaltyRule> rules = provider.GetRules();
                                 foreach (PenaltyRule rule in rules)

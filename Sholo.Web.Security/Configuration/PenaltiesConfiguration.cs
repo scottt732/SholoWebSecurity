@@ -20,15 +20,11 @@ namespace Sholo.Web.Security.Configuration
 {
     public class PenaltiesConfiguration : ConfigurationSection
     {
-        private static PenaltiesConfiguration _penalties
-            = ConfigurationManager.GetSection("sholo.web/penalties") as PenaltiesConfiguration;
+        private const string ConfigurationSectionName = "sholo.web/penalties";
 
-        public static PenaltiesConfiguration Penalties
+        public static PenaltiesConfiguration GetConfig()
         {
-            get
-            {
-                return _penalties;
-            }
+            return (PenaltiesConfiguration) ConfigurationManager.GetSection(ConfigurationSectionName);
         }
 
         [ConfigurationProperty("enabled", IsRequired = false)]
@@ -54,14 +50,19 @@ namespace Sholo.Web.Security.Configuration
         [ConfigurationProperty("providers")]
         public ProviderSettingsCollection Providers
         {
-            get { return this["providers"] as ProviderSettingsCollection; }
+            get
+            {
+                return this["providers"] as ProviderSettingsCollection;
+            }
         }
 
-        [ConfigurationProperty("rules", IsDefaultCollection = false),
-     ConfigurationCollection(typeof(PenaltyRulesCollection), AddItemName = "add", ClearItemsName = "clear", RemoveItemName = "remove")]
+        [ConfigurationProperty("rules", IsDefaultCollection = false), ConfigurationCollection(typeof(PenaltyRulesCollection), AddItemName = "add", ClearItemsName = "clear", RemoveItemName = "remove")]
         public PenaltyRulesCollection Rules
         {
-            get { return this["rules"] as PenaltyRulesCollection; }
+            get
+            {
+                return this["rules"] as PenaltyRulesCollection;
+            }
         }
     }
 }

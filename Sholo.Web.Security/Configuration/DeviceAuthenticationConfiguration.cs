@@ -23,12 +23,11 @@ namespace Sholo.Web.Security.Configuration
     /// </summary>
     public class DeviceAuthenticationConfiguration : ConfigurationSection
     {
-        private const string ConfigurationSectionName = "deviceAuthentication";
+        private const string ConfigurationSectionName = "sholo.web/deviceAuthentication";
 
         public static DeviceAuthenticationConfiguration GetConfig()
         {
-            return (DeviceAuthenticationConfiguration)ConfigurationManager.GetSection(ConfigurationSectionName)
-                ?? new DeviceAuthenticationConfiguration();
+            return (DeviceAuthenticationConfiguration)ConfigurationManager.GetSection(ConfigurationSectionName);
         }
 
         [ConfigurationProperty("enforceClientHostAddressValidation", DefaultValue = "true", IsRequired = false)]
@@ -59,7 +58,7 @@ namespace Sholo.Web.Security.Configuration
             }
         }
 
-        [ConfigurationProperty("hashSalt", DefaultValue = "S%OV6O7L7Dtuq@EEzS&Vfu9uWO&Wrn5DejYxakxcSeMW*JlS!X@hsfEJroei!L7@Z80LQ5^z8RbYRE1M@bwJGFnZSvikZtpvNVHcoDFl*$oY7%XNDBxvh6JbAIS93RI^j", IsRequired = false)]
+        [ConfigurationProperty("hashSalt", DefaultValue = "ExampleSalt", IsRequired = true)]
         public string HashSalt
         {
             get
@@ -68,17 +67,78 @@ namespace Sholo.Web.Security.Configuration
             }
         }
 
+        [ConfigurationProperty("cookieName", DefaultValue = "DEVICE_AUTH", IsRequired = false)]
+        public string CookieName
+        {
+            get
+            {
+                return this["cookieName"] as string;
+            }
+        }
+
+        [ConfigurationProperty("deviceAuthenticateUrl", IsRequired = true)]
+        public string DeviceAuthenticateUrl
+        { 
+            get
+            {
+                return this["deviceAuthenticateUrl"] as string;            
+            }
+        }
+
+        // TODO: See what the Forms DefaultValue is
+        [ConfigurationProperty("path", DefaultValue = "", IsRequired = false)]
+        public string Path
+        {
+            get
+            {
+                return this["path"] as string;
+            }
+        }
+
+        [ConfigurationProperty("requireSSL", DefaultValue = "false", IsRequired = false)]
+        public bool RequireSsl
+        {
+            get
+            {
+                bool result = false;
+                if (this["requireSSL"] != null)
+                {
+                    bool.TryParse(this["requireSSL"].ToString(), out result);
+                }
+                return result;
+            }
+        }
+
+        [ConfigurationProperty("slidingExpiration", DefaultValue = "true", IsRequired = false)]
+        public bool SlidingExpiration
+        {
+            get
+            {
+                bool result = true;
+                if (this["slidingExpiration"] != null)
+                {
+                    bool.TryParse(this["slidingExpiration"].ToString(), out result);
+                }
+                return result;
+            }
+        }
+
         [ConfigurationProperty("providers")]
         public ProviderSettingsCollection Providers
         {
-            get { return (ProviderSettingsCollection) base["providers"]; }
+            get
+            {
+                return (ProviderSettingsCollection) base["providers"];
+            }
         }
 
-        [ConfigurationProperty("stateProvider", DefaultValue="CacheDeviceAuthenticationTicketProvider")]
+        [ConfigurationProperty("stateProvider", DefaultValue = "CacheDeviceAuthenticationTicketProvider")]
         public string StateProvider
         {
-            get { return (string) base["stateProvider"]; }
-            set { base["stateProvider"] = value; }
+            get
+            {
+                return this["stateProvider"] as string;
+            }
         }
     }
 }

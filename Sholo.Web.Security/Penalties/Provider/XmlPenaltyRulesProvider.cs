@@ -29,9 +29,11 @@ namespace Sholo.Web.Security.Penalties.Provider
 
         }
 
-        public override void Initialize()
+        public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
         {
-            var penaltiesConfiguration = PenaltiesConfiguration.Penalties;
+            base.Initialize(name, config);
+
+            var penaltiesConfiguration = PenaltiesConfiguration.GetConfig();
             _rules = new List<PenaltyRule>();
             foreach (PenaltyRuleElement rulesElement in penaltiesConfiguration.Rules)
             {
@@ -82,11 +84,6 @@ namespace Sholo.Web.Security.Penalties.Provider
 
         public override IEnumerable<PenaltyRule> GetRules()
         {
-            if (_rules == null)
-            {
-                Initialize();
-            }
-
             return _rules;
         }
     }

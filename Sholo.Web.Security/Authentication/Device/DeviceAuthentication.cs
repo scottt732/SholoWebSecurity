@@ -16,10 +16,20 @@
 
 using System;
 using System.Configuration;
+using System.Security.Cryptography;
 using System.Web.Configuration;
+using System.Web.Security;
 using Sholo.Web.Security.Authentication.Device.Provider;
 using Sholo.Web.Security.Configuration;
 
+/*
+<deviceAuthentication enforceClientHostAddressValidation="true" enforceUserAgentValidation="false" hashSalt="evenSaltier" stateProvider="CacheDeviceAuthenticationTicketProvider">
+    <providers>
+        <clear />
+        <add name="CacheDeviceAuthenticationTicketProvider" type="Sholo.Web.Security.Authentication.Device.Provider.CacheDeviceAuthenticationTicketProvider, Sholo.Web.Security" />
+    </providers>
+</deviceAuthentication>
+ */
 namespace Sholo.Web.Security.Authentication.Device
 {
     /// <summary>
@@ -31,8 +41,19 @@ namespace Sholo.Web.Security.Authentication.Device
         private static readonly object LockObject;
         private static bool _initialized;
 
+        // System.Web/Authentication and System.Web/Authentication/Forms static classes
+        internal static DeviceAuthenticationConfiguration DeviceAuthenticationConfig;
+
+        private static bool _enabled;
         private static DeviceAuthenticationTicketProviderBase _provider;
         private static DeviceAuthenticationTicketProviderCollection _providers;
+        private static bool _enforceClientHostAddressValidation;
+        private static bool _enforceUserAgentValidation;
+        private static string _hashSalt;
+        private static SHA512Managed _hashAlgorithm;
+        private static string _path;
+        private static bool _requireSsl;
+        private static bool _slidingExpiration;
 
         static DeviceAuthentication()
         {
@@ -47,21 +68,80 @@ namespace Sholo.Web.Security.Authentication.Device
                 {
                     if (!_initialized)
                     {
-                        DeviceAuthenticationConfiguration configuration = (DeviceAuthenticationConfiguration) ConfigurationManager.GetSection("DeviceAuthentication");
+                        FormsAuthentication.Initialize();
+                        DeviceAuthenticationConfig = DeviceAuthenticationConfiguration.GetConfig();
 
-                        if (configuration == null)
-                            throw new ConfigurationErrorsException("DeviceAuthentication configuration section is not configured correctly.");
+                        if (DeviceAuthenticationConfig != null)
+                        {
+                            _enabled = true;
+                            _hashAlgorithm = new SHA512Managed();
+                            _enforceClientHostAddressValidation = DeviceAuthenticationConfig.EnforceClientHostAddressValidation;
+                            _enforceUserAgentValidation = DeviceAuthenticationConfig.EnforceUserAgentValidation;
+                            _hashSalt = DeviceAuthenticationConfig.HashSalt;
+                            _path = DeviceAuthenticationConfig.Path;
+                            _requireSsl = DeviceAuthenticationConfig.RequireSsl;
+                            _slidingExpiration = DeviceAuthenticationConfig.SlidingExpiration;
 
-                        _providers = new DeviceAuthenticationTicketProviderCollection();
-                        ProvidersHelper.InstantiateProviders(configuration.Providers, _providers, typeof (DeviceAuthenticationTicketProviderCollection));
-                        _providers.SetReadOnly();
+                            _providers = new DeviceAuthenticationTicketProviderCollection();
+                            ProvidersHelper.InstantiateProviders(DeviceAuthenticationConfig.Providers, _providers, typeof (DeviceAuthenticationTicketProviderBase));
+                            _providers.SetReadOnly();
 
-                        _provider = _providers[configuration.StateProvider];
+                            _provider = _providers[DeviceAuthenticationConfig.StateProvider];
 
-                        if (_provider == null)
-                            throw new Exception("defaultProvider");
+                            if (_provider == null)
+                            {
+                                throw new Exception("defaultProvider");
+                            }
+
+                            if (_hashSalt == "ExampleSalt")
+                            {
+                                throw new ConfigurationErrorsException("For security purposes, you must change the example salt in web.config's userAuthentication element.`");
+                            }
+                        }
+                        else
+                        {
+                            _enabled = false;
+                        }
+
+                        _initialized = true;
                     }
                 }
+            }
+        }
+
+        public static bool Enabled
+        {
+            get
+            {
+                Initialize();
+                return _enabled;
+            }
+        }
+
+        public static bool EnforceClientHostAddressValidation
+        {
+            get
+            {
+                Initialize();
+                return _enforceClientHostAddressValidation;
+            }
+        }
+
+        public static bool EnforceUserAgentValidation
+        {
+            get
+            {
+                Initialize();
+                return _enforceUserAgentValidation;
+            }
+        }
+
+        public static string HashSalt
+        {
+            get
+            {
+                Initialize();
+                return _hashSalt;
             }
         }
 
@@ -80,6 +160,42 @@ namespace Sholo.Web.Security.Authentication.Device
             {
                 Initialize();
                 return _providers;
+            }
+        }
+
+        public static SHA512Managed HashAlgorithm
+        {
+            get
+            {
+                Initialize();
+                return _hashAlgorithm;
+            }
+        }
+
+        public static string Path
+        {
+            get
+            {
+                Initialize();
+                return _path;
+            }
+        }
+
+        public static bool RequireSsl
+        {
+            get
+            {
+                Initialize();
+                return _requireSsl;
+            }
+        }
+
+        public static bool SlidingExpiration
+        {
+            get
+            {
+                Initialize();
+                return _slidingExpiration;
             }
         }
     }

@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using Sholo.Web.Security.Authentication.Device;
 using Sholo.Web.Security.Authentication.User;
 using Sholo.Web.Security.Penalties;
 using Sholo.Web.Security.Penalties.Provider;
@@ -36,6 +37,22 @@ namespace Sholo.Web.Security.ConfigTest
                 Console.WriteLine("HashSalt: {0}", UserAuthentication.HashSalt);
                 Console.WriteLine("StateProvider: {0}", UserAuthentication.StateProvider);
                 Console.WriteLine("Provider: {0}", UserAuthentication.Provider.GetType().FullName);
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("DeviceAuthentication: {0}", DeviceAuthentication.Enabled);
+            if (DeviceAuthentication.Enabled)
+            {
+                Console.WriteLine("Enabled: {0}", DeviceAuthentication.Enabled);
+                Console.WriteLine("Provider: {0}", DeviceAuthentication.Provider);
+                Console.WriteLine("Providers: {0}", DeviceAuthentication.Providers);
+                Console.WriteLine("EnforceClientHostAddressValidation: {0}", DeviceAuthentication.EnforceClientHostAddressValidation);
+                Console.WriteLine("EnforceUserAgentValidation: {0}", DeviceAuthentication.EnforceUserAgentValidation);
+                Console.WriteLine("HashSalt: {0}", DeviceAuthentication.HashSalt);
+                Console.WriteLine("HashAlgorithm: {0}", DeviceAuthentication.HashAlgorithm);
+                Console.WriteLine("Path: {0}", DeviceAuthentication.Path);
+                Console.WriteLine("RequireSsl: {0}", DeviceAuthentication.RequireSsl);
+                Console.WriteLine("SlidingExpiration: {0}", DeviceAuthentication.SlidingExpiration);
                 Console.WriteLine();
             }
 

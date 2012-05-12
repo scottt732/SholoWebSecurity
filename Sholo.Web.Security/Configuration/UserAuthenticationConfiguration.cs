@@ -31,8 +31,7 @@ namespace Sholo.Web.Security.Configuration
         /// </summary>
         public static UserAuthenticationConfiguration GetConfig()
         {
-            return (UserAuthenticationConfiguration) ConfigurationManager.GetSection(ConfigurationSectionName) 
-                ?? new UserAuthenticationConfiguration();
+            return (UserAuthenticationConfiguration) ConfigurationManager.GetSection(ConfigurationSectionName);
         }
 
         [ConfigurationProperty("enforceClientHostAddressValidation", DefaultValue = "true", IsRequired = false)]
@@ -63,7 +62,7 @@ namespace Sholo.Web.Security.Configuration
             }
         }
 
-        [ConfigurationProperty("hashSalt", DefaultValue = "S%OV6O7L7Dtuq@EEzS&Vfu9uWO&Wrn5DejYxakxcSeMW*JlS!X@hsfEJroei!L7@Z80LQ5^z8RbYRE1M@bwJGFnZSvikZtpvNVHcoDFl*$oY7%XNDBxvh6JbAIS93RI^j", IsRequired = false)]
+        [ConfigurationProperty("hashSalt", DefaultValue = "ExampleSalt", IsRequired = true)]
         public string HashSalt
         {
             get

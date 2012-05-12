@@ -21,7 +21,6 @@ namespace Sholo.Web.Security.Penalties.Provider
 {
     public abstract class PenaltyRulesProviderBase : ProviderBase
     {
-        public abstract void Initialize();
         public abstract IEnumerable<PenaltyRule> GetRules();
     }
 }

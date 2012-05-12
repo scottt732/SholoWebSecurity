@@ -135,6 +135,11 @@ namespace Sholo.Web.Security.Authentication.User
 
                             /* TODO: Implement/fix sliding Provider expiration */
                             _hashSalt = UserAuthenticationConfig.HashSalt;
+
+                            if (_hashSalt == "ExampleSalt")
+                            {
+                                throw new ConfigurationErrorsException("For security purposes, you must change the example salt in web.config's userAuthentication element.`");
+                            }
                         }
                         else
                         {
