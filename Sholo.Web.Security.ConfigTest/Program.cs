@@ -27,7 +27,7 @@ namespace Sholo.Web.Security.ConfigTest
         static void Main(string[] args)
         {
             Console.WriteLine(UserAuthentication.Enabled);
-            var list = new List<PenaltyRule>(PenaltyRuleProviderManager.Provider.GetRules());
+            List<PenaltyRule> list = new List<PenaltyRule>(PenaltyRuleProviderManager.GetAllRules());
             Console.WriteLine(list.Count);
             
             Console.ReadLine();

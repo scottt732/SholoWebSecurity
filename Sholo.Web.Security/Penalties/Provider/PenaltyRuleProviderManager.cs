@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Configuration;
 using Sholo.Web.Security.Configuration;
@@ -47,6 +48,18 @@ namespace Sholo.Web.Security.Penalties.Provider
                 throw new Exception("defaultProvider");
             }
             Provider.Initialize();
+        }
+
+        public static IEnumerable<PenaltyRule> GetAllRules()
+        {
+            foreach (PenaltyRulesProviderBase provider in Providers)
+            {
+                IEnumerable<PenaltyRule> rules = provider.GetRules();
+                foreach (PenaltyRule rule in rules)
+                {
+                    yield return rule;
+                }
+            }
         }
 
         public static PenaltyRulesProviderBase Provider { get; private set; }
