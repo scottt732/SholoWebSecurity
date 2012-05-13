@@ -80,18 +80,16 @@ namespace Sholo.Web.Security
             EnhancedSecurity.Initialize();                        
 
             HttpCookie formsAuthCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
-            FormsAuthenticationAnalyzer analyzer = new FormsAuthenticationAnalyzer(formsAuthCookie, false);
+            RequestAnalysis analysis = RequestAnalyzer.AnalyzeRequest(formsAuthCookie, RequestLifecyclePhase.BeginRequest, true);
 
-            context.Items["preAnalyzer"] = analyzer;
-
-            if (analyzer.RequestIsAuthenticated)
+            if (analysis.RequestIsAuthenticated)
             {
-                if (analyzer.RequestIsMalicious)
+                if (analysis.RequestIsMalicious)
                 {
                     EnhancedSecurity.SetFormsAuthStatus(FormsAuthenticationStatus.Invalid);
                     EnhancedSecurity.DelayMaliciousResponse();
                 }
-                else if (!analyzer.RequestIsValid)
+                else if (!analysis.RequestIsValid)
                 {
                     EnhancedSecurity.SetFormsAuthStatus(FormsAuthenticationStatus.Invalid);
                 }
@@ -102,18 +100,18 @@ namespace Sholo.Web.Security
                     if (UserAuthentication.Enabled)
                     {
                         // analyzer.FormsAuthenticationCookie.Value;
-                        context.Items["OriginalCookieValue"] = analyzer.FormsAuthenticationCookie.Value;
-                        context.Items["ServerUserData"] = analyzer.FormsAuthenticationTicket.UserData;
-                        context.Items["ServerTicketKey"] = analyzer.UserAuthenticationTicket.Key;
-                        context.Items["UserAuthenticationTicket"] = analyzer.UserAuthenticationTicket;
+                        context.Items["OriginalCookieValue"] = analysis.FormsAuthenticationCookie.Value;
+                        context.Items["ServerUserData"] = analysis.FormsAuthenticationTicket.UserData;
+                        context.Items["ServerTicketKey"] = analysis.UserAuthenticationTicket.Key;
+                        context.Items["UserAuthenticationTicket"] = analysis.UserAuthenticationTicket;
 
                         // Substitute actual UserData from serverTicket
                         FormsAuthenticationTicket tempFormsAuthTicket = UserAuthentication.CreateFormsAuthTicket(
-                            analyzer.UserAuthenticationTicket.Username,
-                            analyzer.UserAuthenticationTicket.CookiePath,
-                            analyzer.UserAuthenticationTicket.TicketUserData, 
-                            analyzer.UserAuthenticationTicket.TicketIssueDate,
-                            analyzer.FormsAuthenticationTicket.Expiration,
+                            analysis.UserAuthenticationTicket.Username,
+                            analysis.UserAuthenticationTicket.CookiePath,
+                            analysis.UserAuthenticationTicket.TicketUserData, 
+                            analysis.UserAuthenticationTicket.TicketIssueDate,
+                            analysis.FormsAuthenticationTicket.Expiration,
                             false
                         );
 
@@ -123,7 +121,7 @@ namespace Sholo.Web.Security
             }
             else
             {
-                if (analyzer.RequestIsMalicious)
+                if (analysis.RequestIsMalicious)
                 {
                     EnhancedSecurity.SetFormsAuthStatus(FormsAuthenticationStatus.Invalid);
                     EnhancedSecurity.DelayMaliciousResponse();
@@ -165,12 +163,12 @@ namespace Sholo.Web.Security
               
             if (status == FormsAuthenticationStatus.NotFound || status == FormsAuthenticationStatus.Invalid)
             {
-                FormsAuthenticationAnalyzer preAnalyzer = context.Items["preAnalyzer"] as FormsAuthenticationAnalyzer;
-                FormsAuthenticationAnalyzer postAnalyzer = new FormsAuthenticationAnalyzer(response.Cookies[FormsAuthentication.FormsCookieName], true);
+                RequestAnalysis preAnalyzer = RequestAnalyzer.RetrieveAnalysis(RequestLifecyclePhase.BeginRequest);
+                RequestAnalysis postAnalyzer = RequestAnalyzer.AnalyzeRequest(response.Cookies[FormsAuthentication.FormsCookieName], RequestLifecyclePhase.EndRequest, true);
 
                 if (preAnalyzer != null)
                 {
-                    ComparisonResult result = FormsAuthenticationAnalyzer.Compare(preAnalyzer, postAnalyzer);
+                    ComparisonResult result = RequestAnalyzer.Compare(preAnalyzer, postAnalyzer);
 
                     if (result == ComparisonResult.UnauthenticatedRequest)
                     {

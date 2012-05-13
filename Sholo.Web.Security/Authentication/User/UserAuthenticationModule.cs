@@ -87,12 +87,12 @@ namespace Sholo.Web.Security.Authentication.User
 
             if (status == FormsAuthenticationStatus.NotFound || status == FormsAuthenticationStatus.Invalid)
             {
-                FormsAuthenticationAnalyzer preAnalyzer = context.Items["preAnalyzer"] as FormsAuthenticationAnalyzer;
-                FormsAuthenticationAnalyzer postAnalyzer = new FormsAuthenticationAnalyzer(response.Cookies[FormsAuthentication.FormsCookieName], true);
+                RequestAnalysis preAnalyzer = RequestAnalyzer.RetrieveAnalysis(RequestLifecyclePhase.BeginRequest);
+                RequestAnalysis postAnalyzer = RequestAnalyzer.AnalyzeRequest(response.Cookies[FormsAuthentication.FormsCookieName], RequestLifecyclePhase.EndRequest, true);
 
                 if (preAnalyzer != null)
                 {
-                    ComparisonResult result = FormsAuthenticationAnalyzer.Compare(preAnalyzer, postAnalyzer);
+                    ComparisonResult result = RequestAnalyzer.Compare(preAnalyzer, postAnalyzer);
 
                     if (result == ComparisonResult.UnauthenticatedRequest)
                     {

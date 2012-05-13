@@ -24,13 +24,13 @@ using Sholo.Web.Security.Authentication.User;
 
 public partial class User_controls_CookieMonster : System.Web.UI.UserControl
 {
-    FormsAuthenticationAnalyzer preAnalyzer;
-    FormsAuthenticationAnalyzer postAnalyzer;
+    RequestAnalysis preAnalyzer;
+    RequestAnalysis postAnalyzer;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        preAnalyzer = Context.Items["preAnalyzer"] as FormsAuthenticationAnalyzer;
-        postAnalyzer = new FormsAuthenticationAnalyzer(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName], false);
+        preAnalyzer = RequestAnalyzer.RetrieveAnalysis(RequestLifecyclePhase.BeginRequest);
+        postAnalyzer = RequestAnalyzer.AnalyzeRequest(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName], RequestLifecyclePhase.ProcessRequest, true);
 
         if (!Page.IsPostBack)
         {
@@ -268,7 +268,7 @@ public partial class User_controls_CookieMonster : System.Web.UI.UserControl
         }
 
         Response.Redirect(Request.RawUrl, false);
-        // postAnalyzer = new FormsAuthenticationAnalyzer(Request.Cookies[FormsAuthentication.FormsCookieName], true);       
+        // postAnalyzer = new RequestAnalyzer(Request.Cookies[FormsAuthentication.FormsCookieName], true);       
         // BindFields();
         // ValidateFields();
     }

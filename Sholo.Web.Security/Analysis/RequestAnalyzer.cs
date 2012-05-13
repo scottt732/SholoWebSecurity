@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using Sholo.Web.Security.Authentication.User;
@@ -24,130 +25,77 @@ namespace Sholo.Web.Security.Analysis
     /// <summary>
     /// Utility class to analyze the state of FormsAuthenticationTickets and FormsAuthenticationCookies
     /// </summary>
-    [Serializable]
-    public class FormsAuthenticationAnalyzer
+    public static class RequestAnalyzer
     {
         /// <summary>
         /// Creates a new instance of a FormsAuthenticationCookieAnalyzer
         /// </summary>
         /// <param name="formsAuthenticationCookie">The formsAuthenticationCookie to inspect</param>
-        /// <param name="isEndRequest">Indicates whether the analysis is occurring during the EndRequest phase of the execution pipeline</param>
-        public FormsAuthenticationAnalyzer(HttpCookie formsAuthenticationCookie, bool isEndRequest)
+        /// <param name="requestPhase">The phase of the request procesisng lifecycle from which the analysis is being requested</param>
+        /// <param name="saveToContext">Whether or not to save the result of the analysis to the HttpContext.Current.Items collection</param>
+        public static RequestAnalysis AnalyzeRequest(HttpCookie formsAuthenticationCookie, RequestLifecyclePhase? requestPhase, bool saveToContext)
         {
             EnhancedSecurity.Initialize();
 
-            Context = new ContextInformation();
-            FormsAuthenticationCookieResult = AnalyzeFormsAuthenticationCookie(formsAuthenticationCookie);
+            ContextInformation context = new ContextInformation();
+            FormsAuthenticationCookieAnalysis formsAuthenticationCookieResult = AnalyzeFormsAuthenticationCookie(formsAuthenticationCookie);
+            FormsAuthenticationTicketAnalysis formsAuthenticationTicketResult;
+            UserAuthenticationTicketAnalysis userAuthenticationTicketResult;
+
             if (UserAuthentication.Enabled)
             {
-                FormsAuthenticationTicketResult = AnalyzeFormsAuthenticationTicket(FormsAuthenticationCookieResult, true, isEndRequest);
-                UserAuthenticationTicketResult = AnalyzeServerAuthenticationTicket(Context, FormsAuthenticationCookieResult, FormsAuthenticationTicketResult, UserAuthentication.EnforceClientHostAddressValidation);
+                formsAuthenticationTicketResult = AnalyzeFormsAuthenticationTicket(formsAuthenticationCookieResult, true, requestPhase);
+                userAuthenticationTicketResult = AnalyzeServerAuthenticationTicket(context, formsAuthenticationCookieResult, formsAuthenticationTicketResult, UserAuthentication.EnforceClientHostAddressValidation);
             }
             else
             {
-                FormsAuthenticationTicketResult = AnalyzeFormsAuthenticationTicket(FormsAuthenticationCookieResult, false, isEndRequest);
-                UserAuthenticationTicketResult = new UserAuthenticationTicketAnalysis();
+                formsAuthenticationTicketResult = AnalyzeFormsAuthenticationTicket(formsAuthenticationCookieResult, false, requestPhase);
+                userAuthenticationTicketResult = new UserAuthenticationTicketAnalysis();
             }
-        }
 
-        
-        /// <summary>
-        /// Context information derived from the current request
-        /// </summary>
-        public ContextInformation Context { get; protected set; }
-        
-        /// <summary>
-        /// Analysis results of the FormsAuthenticationCookie validity & security
-        /// </summary>
-        public FormsAuthenticationCookieAnalysis FormsAuthenticationCookieResult { get; protected set; }
-        
-        /// <summary>
-        /// Analysis results of the FormsAuthenticationTicket validity & security
-        /// </summary>
-        public FormsAuthenticationTicketAnalysis FormsAuthenticationTicketResult { get; protected set; }
-        
-        /// <summary>
-        /// Analysis result of the UserAuthenticationTicket validity & security
-        /// </summary>
-        public UserAuthenticationTicketAnalysis UserAuthenticationTicketResult { get; private set; }
-
-        /// <summary>
-        /// The FormsAuthenticationCookie inspected
-        /// </summary>
-        public HttpCookie FormsAuthenticationCookie
-        {
-            get
+            RequestAnalysis result = new RequestAnalysis(context, formsAuthenticationCookieResult, formsAuthenticationTicketResult, userAuthenticationTicketResult);
+            if (saveToContext)
             {
-                return FormsAuthenticationCookieResult.FormsAuthenticationCookie;
+                string contextKey = "Analysis:" + requestPhase.ToString();
+                HttpContext.Current.Items[contextKey] = result;
             }
+
+            return result;
         }
 
         /// <summary>
-        /// The FormsAuthenticationTicket inspected
+        /// Retrieve all phases for which a RequestAnalysis has been performed & persisted to HttpContext.Current.Items collection
         /// </summary>
-        public FormsAuthenticationTicket FormsAuthenticationTicket
+        /// <returns>An array of available RequestLifecyclePhases with analysis</returns>
+        public static RequestLifecyclePhase[] GetRequestPhasesWithAnalyses()
         {
-            get
+            List<RequestLifecyclePhase> result = new List<RequestLifecyclePhase>();
+            Array values = Enum.GetValues(typeof (RequestLifecyclePhase));
+            foreach (RequestLifecyclePhase phase in values)
             {
-                return FormsAuthenticationTicketResult.FormsAuthenticationTicket;
+                if (RetrieveAnalysis(phase) != null)
+                {
+                    result.Add(phase);
+                }
             }
-        }
+            return result.ToArray();
+        } 
 
         /// <summary>
-        /// The UserAuthenticationTicket inspected
+        /// Retrieves the saved analysis for the request phase specified
         /// </summary>
-        public UserAuthenticationTicket UserAuthenticationTicket
+        /// <param name="requestPhase">The phase of the request processing to request an analysis for</param>
+        /// <returns>The RequestAnalysis at the phase requested or null of one is not available</returns>
+        public static RequestAnalysis RetrieveAnalysis(RequestLifecyclePhase requestPhase)
         {
-            get
+            string contextKey = "Analysis:" + requestPhase.ToString();
+            if (HttpContext.Current.Items.Contains(contextKey))
             {
-                return UserAuthenticationTicketResult.UserAuthenticationTicket;
+                RequestAnalysis result = HttpContext.Current.Items[contextKey] as RequestAnalysis;
             }
+            return null;
         }
-
-        /// <summary>
-        /// Indicates whether the current request is authenticated
-        /// </summary>
-        public bool RequestIsAuthenticated
-        {
-            get
-            {
-                // return new ContextInformation().IsAuthenticated;
-                return FormsAuthenticationTicket != null && FormsAuthenticationTicketResult != null && FormsAuthenticationTicketResult.IsValid;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether the current request is valid
-        /// </summary>
-        public bool RequestIsValid
-        {
-            get
-            {
-                return
-                    FormsAuthenticationCookieResult.IsValid
-                    && FormsAuthenticationTicketResult.IsValid
-                    &&
-                    (
-                        (UserAuthentication.Enabled && UserAuthenticationTicketResult.IsValid)
-                    || !UserAuthentication.Enabled
-                    );
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether the current request is malicious
-        /// </summary>
-        public bool RequestIsMalicious
-        {
-            get
-            {
-                return
-                    FormsAuthenticationCookieResult.IsMalicious
-                    || FormsAuthenticationTicketResult.IsMalicious
-                    || (UserAuthentication.Enabled && UserAuthenticationTicketResult.IsMalicious);
-            }
-        }
-
+      
         /// <summary>
         /// Perform analysis of the FormsAuthenticationCookie supplied
         /// </summary>
@@ -230,9 +178,8 @@ namespace Sholo.Web.Security.Analysis
         /// </summary>
         /// <param name="cookieAnalysis">The result of the FormsAuthenticationCookie analysis</param>
         /// <param name="enforceServerAuthenticationTicketValidation">Indicates whether to enforce UserAuthenticationTicket validation</param>
-        /// <param name="isEndRequest">Indicates whether the analysis is occurring during the EndRequest phase of the execution pipeline</param>
         /// <returns>A FormsAuthenticationTicketAnalysis object containing the results of the analysis</returns>
-        public static FormsAuthenticationTicketAnalysis AnalyzeFormsAuthenticationTicket(FormsAuthenticationCookieAnalysis cookieAnalysis, bool enforceServerAuthenticationTicketValidation, bool isEndRequest)
+        public static FormsAuthenticationTicketAnalysis AnalyzeFormsAuthenticationTicket(FormsAuthenticationCookieAnalysis cookieAnalysis, bool enforceServerAuthenticationTicketValidation, RequestLifecyclePhase? phase)
         {
             FormsAuthenticationTicketAnalysis analysis = new FormsAuthenticationTicketAnalysis();
             FormsAuthenticationTicket ticket = cookieAnalysis.GetFormsAuthenticationTicket();
@@ -481,7 +428,7 @@ namespace Sholo.Web.Security.Analysis
         /// <param name="before">The prior analysis</param>
         /// <param name="after">The current analysis</param>
         /// <returns>A conclusion derived from the analysis change</returns>
-        public static ComparisonResult Compare(FormsAuthenticationAnalyzer before, FormsAuthenticationAnalyzer after)
+        public static ComparisonResult Compare(RequestAnalysis before, RequestAnalysis after)
         {
             if (before.RequestIsMalicious || after.RequestIsMalicious)
             {

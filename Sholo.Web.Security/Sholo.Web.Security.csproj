@@ -72,6 +72,8 @@
     <Compile Include="Analysis\ContextInformation.cs" />
     <Compile Include="Analysis\FormsAuthenticationCookieAnalysis.cs" />
     <Compile Include="Analysis\FormsAuthenticationTicketAnalysis.cs" />
+    <Compile Include="Analysis\RequestLifecyclePhase.cs" />
+    <Compile Include="Analysis\RequestAnalysis.cs" />
     <Compile Include="Analysis\UserAuthenticationTicketAnalysis.cs" />
     <Compile Include="Authentication\BaseAuthenticationTicket.cs" />
     <Compile Include="Authentication\IAuthenticationTicket.cs" />
@@ -85,7 +87,7 @@
     <Compile Include="Configuration\SecurityProfilerConfiguration.cs" />
     <Compile Include="Configuration\UserAuthenticationConfiguration.cs" />
     <Compile Include="Configuration\UserAuthenticationTicketProviderCollection.cs" />
-    <Compile Include="Analysis\FormsAuthenticationAnalyzer.cs" />
+    <Compile Include="Analysis\RequestAnalyzer.cs" />
     <Compile Include="Analysis\FormsAuthenticationStatus.cs" />
     <Compile Include="Authentication\Device\DeviceAuthentication.cs" />
     <Compile Include="Authentication\Device\DeviceAuthenticationModule.cs" />
